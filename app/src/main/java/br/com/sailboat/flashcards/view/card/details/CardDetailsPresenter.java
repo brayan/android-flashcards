@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.detail;
+package br.com.sailboat.flashcards.view.card.details;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,11 +16,11 @@ import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardTagSQLite;
 
 
-public class CardDetailPresenter extends BasePresenter<CardDetailPresenter.View> {
+public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.View> {
 
-    private CardDetailViewModel viewModel = new CardDetailViewModel();
+    private CardDetailsViewModel viewModel = new CardDetailsViewModel();
 
-    public CardDetailPresenter(View view) {
+    public CardDetailsPresenter(View view) {
         super(view);
     }
 
@@ -138,7 +138,7 @@ public class CardDetailPresenter extends BasePresenter<CardDetailPresenter.View>
         view.updateRecycler();
     }
 
-    private CardDetailViewModel getViewModel() {
+    private CardDetailsViewModel getViewModel() {
         return viewModel;
     }
 

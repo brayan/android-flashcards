@@ -1,18 +1,18 @@
-package br.com.sailboat.flashcards.view.insert;
+package br.com.sailboat.flashcards.view.card.insert;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sailboat.canoe.helper.EntityHelper;
-import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
 
 public class InsertCardViewModel implements Serializable {
 
     private long cardId = EntityHelper.NO_ID;
     private String front;
     private String back;
-    private final List<Tag> tags = new ArrayList<>();
+    private final List<RecyclerItem> tags = new ArrayList<>();
 
     public long getCardId() {
         return cardId;
@@ -38,7 +38,7 @@ public class InsertCardViewModel implements Serializable {
         this.back = back;
     }
 
-    public List<Tag> getTags() {
+    public List<RecyclerItem> getTags() {
         return tags;
     }
 

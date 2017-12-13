@@ -52,11 +52,11 @@ public class ExtrasHelper {
         return bundle.getLong(TAG_ID, -1);
     }
 
-    public static void putProjects(List<Tag> projects, Intent intent) {
+    public static void putTags(List<Tag> projects, Intent intent) {
         intent.putExtra(TAG_LIST, (ArrayList<Tag>) projects);
     }
 
-    public static void putProjects(List<Tag> projects, Bundle bundle) {
+    public static void putTags(List<Tag> projects, Bundle bundle) {
         bundle.putSerializable(TAG_LIST, (ArrayList<Tag>) projects);
     }
 

@@ -9,5 +9,9 @@
     <string name="title_new_card">Novo Cartão</string>
     <string name="title_edit_card">Editar Cartão</string>
     <string name="no_cards_found">Nenhum cartão encontrado</string>
+    <string name="no_tags_found">Nenhuma tag encontrada</string>
     <string name="label_tags">Tags</string>
+    <string name="msg_insert_tag">You must insert the content of the tag</string>
+    <string name="title_tag_details">Detalhes da Tag</string>
+    <string name="label_cards">Cartões</string>
 </resources>

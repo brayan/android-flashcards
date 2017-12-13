@@ -33,10 +33,32 @@ public class CardTagSQLite extends BaseSQLite {
         return  sb.toString();
     }
 
+    public void save(long cardId, long tagId) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" INSERT INTO CardTag ");
+        sb.append(" (cardId, tagId) ");
+        sb.append(" VALUES (?, ?); ");
+
+        SQLiteStatement statement = compileStatement(sb.toString());
+        statement.bindLong(1, cardId);
+        statement.bindLong(2, tagId);
+
+        insert(statement);
+    }
+
     public void deleteByCardId(long cardId) {
         String sql = "DELETE FROM CardTag WHERE CardTag.cardId = ?";
         SQLiteStatement statement = compileStatement(sql);
         statement.bindLong(1, cardId);
+
+        delete(statement);
+    }
+
+    public void deleteByTagId(long tagId) {
+        String sql = "DELETE FROM CardTag WHERE CardTag.tagId = ?";
+        SQLiteStatement statement = compileStatement(sql);
+        statement.bindLong(1, tagId);
 
         delete(statement);
     }

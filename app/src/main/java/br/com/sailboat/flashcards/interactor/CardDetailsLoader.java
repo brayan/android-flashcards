@@ -8,7 +8,6 @@ import java.util.List;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.canoe.recycler.item.LabelRecyclerItem;
 import br.com.sailboat.canoe.recycler.item.LabelValueRecyclerItem;
-import br.com.sailboat.canoe.recycler.item.TitleRecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ViewType;
 import br.com.sailboat.flashcards.model.Card;
@@ -24,16 +23,17 @@ public class CardDetailsLoader {
 
         Card card = CardSQLite.newInstance(context).getCardById(cardId);
 
-        addFront(recyclerItems, card);
+        addFront(context, card, recyclerItems);
         addBack(context, card, recyclerItems);
         addTags(context, cardId, recyclerItems);
 
         return recyclerItems;
     }
 
-    private static void addFront(List<RecyclerItem> recyclerItems, Card card) {
-        TitleRecyclerItem item = new TitleRecyclerItem(ViewType.TITLE);
-        item.setTitle(card.getFront());
+    private static void addFront(Context context, Card card, List<RecyclerItem> recyclerItems) {
+        LabelValueRecyclerItem item = new LabelValueRecyclerItem(ViewType.LABEL_VALUE);
+        item.setLabel(context.getString(R.string.label_front));
+        item.setValue(card.getFront());
 
         recyclerItems.add(item);
     }

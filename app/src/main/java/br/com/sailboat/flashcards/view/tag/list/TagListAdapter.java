@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.list;
+package br.com.sailboat.flashcards.view.tag.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -7,15 +7,15 @@ import java.util.List;
 
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.helper.ViewType;
-import br.com.sailboat.flashcards.model.Card;
-import br.com.sailboat.flashcards.view.view_holder.CardViewHolder;
+import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.view.view_holder.TagViewHolder;
 
 
-public class CardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TagListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private CardListAdapter.Callback callback;
+    private TagListAdapter.Callback callback;
 
-    public CardListAdapter(CardListAdapter.Callback callback) {
+    public TagListAdapter(TagListAdapter.Callback callback) {
         setCallback(callback);
     }
 
@@ -23,8 +23,8 @@ public class CardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         switch (viewType) {
-            case ViewType.CARD: {
-                return CardViewHolder.newInstance(parent, callback);
+            case ViewType.TAG: {
+                return TagViewHolder.newInstance(parent, callback);
             }
             default: {
                 throw new RuntimeException("ViewHolder not found");
@@ -37,8 +37,8 @@ public class CardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerItem item = getCallback().getRecyclerItemList().get(position);
 
         switch (item.getViewType()) {
-            case ViewType.CARD: {
-                ((CardViewHolder) holder).bindToView((Card) item);
+            case ViewType.TAG: {
+                ((TagViewHolder) holder).bindToView((Tag) item);
                 return;
             }
             default: {
@@ -66,7 +66,7 @@ public class CardListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.callback = callback;
     }
 
-    public interface Callback extends CardViewHolder.Callback {
+    public interface Callback extends TagViewHolder.Callback {
         List<RecyclerItem> getRecyclerItemList();
     }
 

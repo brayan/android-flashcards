@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.list;
+package br.com.sailboat.flashcards.view.card.list;
 
 import java.io.Serializable;
 import java.util.ArrayList;

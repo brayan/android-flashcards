@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.insert;
+package br.com.sailboat.flashcards.view.card.insert;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;

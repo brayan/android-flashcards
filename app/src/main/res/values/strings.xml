@@ -11,4 +11,8 @@
     <string name="title_edit_card">Edit Card</string>
     <string name="no_cards_found">No cards found</string>
     <string name="label_tags">Tags</string>
+    <string name="no_tags_found">No tags found</string>
+    <string name="msg_insert_tag">You must insert the content of the tag</string>
+    <string name="title_tag_details">Tag Details</string>
+    <string name="label_cards">Cards</string>
 </resources>

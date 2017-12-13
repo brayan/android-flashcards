@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.detail;
+package br.com.sailboat.flashcards.view.tag.details;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -15,20 +14,16 @@ import br.com.sailboat.canoe.dialog.TwoOptionsDialog;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
-import br.com.sailboat.flashcards.view.insert.InsertCardActivity;
+import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
 
-public class CardDetailFragment extends BaseFragment<CardDetailPresenter> implements CardDetailPresenter.View, CardDetailsAdapter.Callback {
-
-    private View viewMetrics;
-    private TextView tvNotDone;
-    private TextView tvDone;
+public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implements TagDetailsPresenter.View, TagDetailsAdapter.Callback {
 
 
-    public static CardDetailFragment newInstance(long cardId) {
+    public static TagDetailsFragment newInstance(long tagId) {
         Bundle bundle = new Bundle();
-        ExtrasHelper.putCardId(cardId, bundle);
+        ExtrasHelper.putTagId(tagId, bundle);
 
-        CardDetailFragment fragment = new CardDetailFragment();
+        TagDetailsFragment fragment = new TagDetailsFragment();
         fragment.setArguments(bundle);
 
         return fragment;
@@ -36,13 +31,13 @@ public class CardDetailFragment extends BaseFragment<CardDetailPresenter> implem
 
 
     @Override
-    protected CardDetailPresenter newPresenterInstance() {
-        return new CardDetailPresenter(this);
+    protected TagDetailsPresenter newPresenterInstance() {
+        return new TagDetailsPresenter(this);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.frg_card_detail;
+        return R.layout.frg_tag_details;
     }
 
     @Override
@@ -60,11 +55,12 @@ public class CardDetailFragment extends BaseFragment<CardDetailPresenter> implem
                 getActivity().onBackPressed();
             }
         });
+        toolbar.setTitle(R.string.title_tag_details);
     }
 
     @Override
     protected void onInitRecycler() {
-        recycler.setAdapter(new CardDetailsAdapter(this));
+        recycler.setAdapter(new TagDetailsAdapter(this));
     }
 
     @Override
@@ -73,51 +69,36 @@ public class CardDetailFragment extends BaseFragment<CardDetailPresenter> implem
     }
 
     @Override
-    protected void initViews() {
-        initMetricViews();
-    }
-
-    @Override
     protected void postActivityResult(int requestCode, Intent data) {
         getPresenter().postActivityResult();
     }
 
     public void onClickTag(int position) {
-        presenter.onClickTag(position);
+        presenter.onClickCard(position);
     }
 
     @Override
-    public void setRightAnswers(String amount) {
-        tvDone.setText(amount);
-    }
-
-    @Override
-    public void setWrongAnswers(String amount) {
-        tvNotDone.setText(amount);
-    }
-
-    @Override
-    public void showDialogDeleteCard() {
+    public void showDialogDeleteTag() {
         TwoOptionsDialog dialog = new TwoOptionsDialog();
         dialog.setMessage(getString(R.string.are_you_sure));
         dialog.setPositiveMsg(getString(R.string.delete));
         dialog.setPositiveCallback(new TwoOptionsDialog.PositiveCallback() {
             @Override
             public void onClickPositiveOption() {
-                getPresenter().onClickDeleteTask();
+                getPresenter().onClickDeleteTag();
             }
         });
-        dialog.show(getFragmentManager(), "DELETE_TASK");
+        dialog.show(getFragmentManager(), TwoOptionsDialog.class.getCanonicalName());
     }
 
     @Override
-    public void startInsertCardActivity(long cardId) {
-        InsertCardActivity.startToEdit(this, cardId);
+    public void startInsertTag(long cardId) {
+        // TODO:
     }
 
     @Override
-    public void startTagDetails(long projectId) {
-//        ProjectDetailActivity.start(this, projectId);
+    public void startCardDetails(long cardId) {
+        CardDetailsActivity.start(this, cardId);
     }
 
     @Override
@@ -137,10 +118,8 @@ public class CardDetailFragment extends BaseFragment<CardDetailPresenter> implem
         return presenter.getRecyclerItemList();
     }
 
-    private void initMetricViews() {
-        viewMetrics = getView().findViewById(R.id.appbar_card_details__fl__metrics);
-        tvNotDone = getView().findViewById(R.id.card_metrics__tv__not_done);
-        tvDone = getView().findViewById(R.id.card_metrics__tv__done);
+    @Override
+    public void onLongClickCard(int position) {
+        presenter.onClickCard(position);
     }
-
 }

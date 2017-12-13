@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".view.list.CardListActivity">
+        <activity android:name=".view.card.list.CardListActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,9 +19,16 @@
 
         </activity>
 
-        <activity android:name=".view.insert.InsertCardActivity"/>
+        <activity android:name=".view.card.insert.InsertCardActivity"
+            android:windowSoftInputMode="stateVisible"/>
 
-        <activity android:name=".view.detail.CardDetailActivity"/>
+        <activity android:name=".view.card.details.CardDetailsActivity"/>
+
+        <activity android:name=".view.tag.list.TagListActivity"/>
+
+        <activity android:name=".view.tag.details.TagDetailsActivity"/>
+
+        <activity android:name=".view.tag.selector.TagSelectorActivity"/>
 
     </application>
 

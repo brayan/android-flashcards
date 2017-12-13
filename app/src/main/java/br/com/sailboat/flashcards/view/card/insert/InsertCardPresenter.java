@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.insert;
+package br.com.sailboat.flashcards.view.card.insert;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,13 @@ import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
 import br.com.sailboat.canoe.helper.StringHelper;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
+import br.com.sailboat.flashcards.persistence.sqlite.CardTagSQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
 
 
@@ -47,6 +49,12 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
     @Override
     protected void onResumeAfterRestart() {
         updateContentViews();
+    }
+
+    @Override
+    public void onClickFab() {
+        List<Tag> selectedTags = (List) viewModel.getTags();
+        view.startTagSelector(selectedTags);
     }
 
     public void onClickMenuSave() {
@@ -114,6 +122,7 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
 
     private void updateContentViews() {
         updateTitle();
+        updateTags();
     }
 
     private void updateEditTexts() {
@@ -126,6 +135,18 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
             getView().setTitle(getString(R.string.title_edit_card));
         } else {
             getView().setTitle(getString(R.string.title_new_card));
+        }
+    }
+
+    private void updateTags() {
+        view.updateRecycler();
+
+        if (viewModel.getTags().isEmpty()) {
+            view.hideRecycler();
+            view.showEmptyView();
+        } else {
+            view.showRecycler();
+            view.hideEmptyView();
         }
     }
 
@@ -161,11 +182,11 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
             }
 
             private void prepareAndSaveTags() {
-                TagSQLite dao = TagSQLite.newInstance(getContext());
-                dao.deleteRelationshipsByCard(card.getId());
+                CardTagSQLite dao = CardTagSQLite.newInstance(getContext());
+                dao.deleteByCardId(card.getId());
 
-                for (Tag tag : getViewModel().getTags()) {
-                    dao.addCardTag(card.getId(), tag.getId());
+                for (RecyclerItem tag : getViewModel().getTags()) {
+                    dao.save(card.getId(), ((Tag) tag).getId());
                 }
             }
 
@@ -236,6 +257,19 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         getViewModel().setCardId(cardId);
     }
 
+    public void onClickTag(int position) {
+//        Tag tag = (Tag) viewModel.getTags().get(position);
+//        view.startTagDetails(tag.getId());
+    }
+
+    public List<RecyclerItem> getRecyclerItemList() {
+        return viewModel.getTags();
+    }
+
+    public void onCardDismiss(int position) {
+        getRecyclerItemList().remove(position);
+        updateContentViews();
+    }
 
 
     public interface View extends BasePresenter.View {
@@ -243,6 +277,8 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         void setBack(String notes);
         String getFront();
         String getBack();
+        void startTagDetails(long tagId);
+        void startTagSelector(List<Tag> selectedTags);
     }
 
 

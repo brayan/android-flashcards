@@ -46,7 +46,6 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/hint_insert_front_content"
                         android:inputType="textCapSentences|textMultiLine"
-                        android:maxLength="250"
                         android:minHeight="48dp"
                         android:paddingBottom="8dp"
                         android:paddingLeft="8dp"
@@ -81,7 +80,6 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/hint_insert_back_content"
                         android:inputType="textCapSentences|textMultiLine"
-                        android:maxLength="400"
                         android:minHeight="48dp"
                         android:paddingBottom="8dp"
                         android:paddingLeft="8dp"
@@ -110,10 +108,17 @@
                             android:id="@+id/recycler"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:paddingTop="20dp"
                             android:background="@android:color/transparent"
                             android:clipToPadding="false"
                             android:nestedScrollingEnabled="false"
                             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                        <TextView
+                            style="@style/TextViewLabel"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="4dp"
+                            android:text="@string/label_tags" />
 
                         <include layout="@layout/ept_view" />
 

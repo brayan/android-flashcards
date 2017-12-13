@@ -58,6 +58,15 @@ public class CardSQLite extends BaseSQLite {
         throw new EntityNotFoundException();
     }
 
+    public List<Card> getAllByTag(long tagId) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT Card.* FROM Card ");
+        sb.append(" INNER JOIN CardTag ON (Card.id = CardTag.cardId) ");
+        sb.append(" WHERE CardTag.tagId = " + tagId);
+
+        return getCardList(sb.toString());
+    }
+
     public List<RecyclerItem> getAll(Filter filter) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT Card.* FROM Card ");

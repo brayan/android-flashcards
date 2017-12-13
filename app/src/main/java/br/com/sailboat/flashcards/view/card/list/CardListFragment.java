@@ -1,14 +1,16 @@
-package br.com.sailboat.flashcards.view.list;
+package br.com.sailboat.flashcards.view.card.list;
 
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
-import br.com.sailboat.flashcards.view.detail.CardDetailActivity;
-import br.com.sailboat.flashcards.view.insert.InsertCardActivity;
+import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
+import br.com.sailboat.flashcards.view.card.insert.InsertCardActivity;
+import br.com.sailboat.flashcards.view.tag.list.TagListActivity;
 
 
 public class CardListFragment extends BaseFragment<CardListPresenter> implements CardListPresenter.View {
@@ -25,8 +27,23 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_card_list, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_card_list__tags: {
+                TagListActivity.start(this);
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
     }
 
     @Override
@@ -52,7 +69,7 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     public void startCardDetailsActivity(long taskId) {
-        CardDetailActivity.start(this, taskId);
+        CardDetailsActivity.start(this, taskId);
     }
 
     @Override

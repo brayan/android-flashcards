@@ -1,21 +1,29 @@
-package br.com.sailboat.flashcards.view.insert;
+package br.com.sailboat.flashcards.view.card.insert;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.List;
+
 import br.com.sailboat.canoe.base.BaseFragment;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
+import br.com.sailboat.canoe.recycler.SwipeLeftRight;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.helper.RequestCodeHelper;
+import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
+import br.com.sailboat.flashcards.view.tag.list.TagListAdapter;
+import br.com.sailboat.flashcards.view.tag.selector.TagSelectorActivity;
 
 
-public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implements InsertCardPresenter.View {
+public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implements InsertCardPresenter.View, TagListAdapter.Callback {
 
     private EditText etFront;
     private EditText etBack;
@@ -56,6 +64,12 @@ public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implem
     }
 
     @Override
+    protected void initEmptyViewMessages() {
+        setEmptyViewMessage1(getString(R.string.no_tags_found));
+        setEmptyViewMessage2(getString(R.string.ept_click_to_add));
+    }
+
+    @Override
     protected void initViews() {
         initEditTexts();
     }
@@ -83,7 +97,7 @@ public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implem
     protected void onActivityResultOk(int requestCode, Intent data) {
 
         switch (requestCode) {
-            case RequestCodeHelper.SELECT_PROJECT: {
+            case RequestCodeHelper.SELECTOR_TAG: {
                 getPresenter().onActivityResultOkSelectTag(data);
                 return;
             }
@@ -112,22 +126,19 @@ public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implem
         return etBack.getText().toString();
     }
 
+    @Override
+    public void startTagDetails(long tagId) {
+        TagDetailsActivity.start(this, tagId);
+    }
+
+    @Override
+    public void startTagSelector(List<Tag> selectedTags) {
+        TagSelectorActivity.start(this, selectedTags);
+    }
+
     private void initEditTexts() {
         etFront = getView().findViewById(R.id.frg_insert_card__et__front);
         etBack = getView().findViewById(R.id.frg_insert_card__et__back);
-
-        etFront.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    closeKeyboard();
-                    return true;
-                }
-
-                return false;
-            }
-        });
     }
 
     @Override
@@ -141,4 +152,26 @@ public class InsertCardFragment extends BaseFragment<InsertCardPresenter> implem
         });
     }
 
+    @Override
+    protected void onInitRecycler() {
+        recycler.setAdapter(new TagListAdapter(this));
+        ItemTouchHelper.Callback callback = new SwipeLeftRight(getActivity(), new SwipeLeftRight.Callback() {
+            @Override
+            public void onItemDismiss(int position) {
+                presenter.onCardDismiss(position);
+            }
+        });
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recycler);
+    }
+
+    @Override
+    public void onClickTag(int position) {
+        presenter.onClickTag(position);
+    }
+
+    @Override
+    public List<RecyclerItem> getRecyclerItemList() {
+        return presenter.getRecyclerItemList();
+    }
 }

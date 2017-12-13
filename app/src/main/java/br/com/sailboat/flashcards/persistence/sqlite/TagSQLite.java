@@ -133,26 +133,12 @@ public class TagSQLite extends BaseSQLite {
         delete(statement);
     }
 
-    public void deleteTag(long tagId) {
+    public void delete(long tagId) {
         String sql = "DELETE FROM Tag WHERE Tag.id = ?";
         SQLiteStatement statement = compileStatement(sql);
         statement.bindLong(1, tagId);
 
         delete(statement);
-    }
-
-    public void addCardTag(long cardId, long tagId) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(" INSERT INTO CardTag ");
-        sb.append(" (cardId, tagId) ");
-        sb.append(" VALUES (?, ?, ?); ");
-
-        SQLiteStatement statement = compileStatement(sb.toString());
-        statement.bindLong(1, cardId);
-        statement.bindLong(2, tagId);
-
-        insert(statement);
     }
 
     private Tag buildFromCursor(Cursor cursor) throws Exception {
@@ -162,6 +148,5 @@ public class TagSQLite extends BaseSQLite {
 
         return tag;
     }
-
 
 }

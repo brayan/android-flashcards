@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.list;
+package br.com.sailboat.flashcards.view.tag.list;
 
 import android.os.AsyncTask;
 
@@ -7,38 +7,61 @@ import java.util.List;
 
 import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
+import br.com.sailboat.canoe.helper.LogHelper;
+import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
-import br.com.sailboat.flashcards.model.Card;
+import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.persistence.filter.Filter;
-import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
+import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
 
-public class CardListPresenter extends BasePresenter<CardListPresenter.View> implements CardListAdapter.Callback {
+public class TagListPresenter extends BasePresenter<TagListPresenter.View> implements TagListAdapter.Callback {
 
-    private CardListViewModel viewModel = new CardListViewModel();
+    private TagListViewModel viewModel = new TagListViewModel();
 
-    public CardListPresenter(CardListPresenter.View view) {
+    public TagListPresenter(TagListPresenter.View view) {
         super(view);
         initFilter();
     }
 
     @Override
     protected void postResume() {
-        loadCards();
+        loadTags();
     }
 
     @Override
-    public void onClickCard(int position) {
-        Card card = (Card) getRecyclerItemList().get(position);
-        view.startCardDetailsActivity(card.getId());
+    public void onClickTag(int position) {
+        Tag tag = (Tag) getRecyclerItemList().get(position);
+        view.startTagDetailsActivity(tag.getId());
     }
 
     @Override
     public void onClickFab() {
-        view.startNewCardActivity();
+        view.startNewTagDialog();
+    }
+
+    public void onClickOkInputTag(String text) {
+        try {
+            if (StringHelper.isNotEmpty(text)) {
+                Tag tag = new Tag();
+                tag.setName(text);
+
+                TagSQLite.newInstance(getContext()).save(tag);
+
+                loadTags();
+
+            } else {
+                view.showMessageDialog(getString(R.string.msg_insert_tag));
+            }
+
+        } catch (Exception e) {
+            LogHelper.logException(e);
+            view.showMessageDialog(e.getMessage());
+        }
     }
 
     public void postActivityResult() {
-        loadCards();
+        loadTags();
     }
 
     @Override
@@ -49,27 +72,28 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
     @Override
     protected void onQueryTextChange() {
         viewModel.getFilter().setSearchText(getSearchText());
-        loadCards();
+        loadTags();
     }
 
     private void initFilter() {
         viewModel.setFilter(new Filter());
     }
 
-    private void loadCards() {
+    private void loadTags() {
         AsyncHelper.execute(AsyncTask.THREAD_POOL_EXECUTOR, new AsyncHelper.Callback() {
 
-            List<RecyclerItem> cards = new ArrayList<>();
+            List<RecyclerItem> tags = new ArrayList<>();
 
             @Override
             public void doInBackground() throws Exception {
-                cards = CardSQLite.newInstance(getContext()).getAll(viewModel.getFilter());
+                List<Tag> tagsList = TagSQLite.newInstance(getContext()).getAll(viewModel.getFilter());
+                tags.addAll(tagsList);
             }
 
             @Override
             public void onSuccess() {
                 getRecyclerItemList().clear();
-                getRecyclerItemList().addAll(cards);
+                getRecyclerItemList().addAll(tags);
                 updateContentViews();
             }
 
@@ -88,7 +112,7 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
     }
 
     private void updateRecyclerVisibility() {
-        if (isCardsEmpty()) {
+        if (isRecyclerEmpty()) {
             view.hideRecycler();
             view.showEmptyView();
             view.expandToolbar();
@@ -98,13 +122,16 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
         }
     }
 
-    private boolean isCardsEmpty() {
+    protected boolean isRecyclerEmpty() {
         return getRecyclerItemList().isEmpty();
     }
 
+
     public interface View extends BasePresenter.View {
-        void startNewCardActivity();
-        void startCardDetailsActivity(long taskId);
+        void startNewTagDialog();
+
+        void startTagDetailsActivity(long taskId);
     }
+
 
 }

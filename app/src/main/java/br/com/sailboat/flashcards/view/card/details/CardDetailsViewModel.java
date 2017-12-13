@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.detail;
+package br.com.sailboat.flashcards.view.card.details;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.view.CardMetrics;
 
-public class CardDetailViewModel {
+public class CardDetailsViewModel {
 
     private long cardId;
     private Card card;

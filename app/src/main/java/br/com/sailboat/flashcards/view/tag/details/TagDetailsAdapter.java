@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.detail;
+package br.com.sailboat.flashcards.view.tag.details;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -13,15 +13,15 @@ import br.com.sailboat.canoe.recycler.view_holder.LabelValueViewHolder;
 import br.com.sailboat.canoe.recycler.view_holder.LabelViewHolder;
 import br.com.sailboat.canoe.recycler.view_holder.TitleViewHolder;
 import br.com.sailboat.flashcards.helper.ViewType;
-import br.com.sailboat.flashcards.model.Tag;
-import br.com.sailboat.flashcards.view.view_holder.TagViewHolder;
+import br.com.sailboat.flashcards.model.Card;
+import br.com.sailboat.flashcards.view.view_holder.CardViewHolder;
 
 
-public class CardDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TagDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private CardDetailsAdapter.Callback callback;
+    private TagDetailsAdapter.Callback callback;
 
-    public CardDetailsAdapter(Callback callback) {
+    public TagDetailsAdapter(Callback callback) {
         this.callback = callback;
     }
 
@@ -37,8 +37,8 @@ public class CardDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case ViewType.LABEL_VALUE: {
                 return LabelValueViewHolder.newInstance(parent);
             }
-            case ViewType.TAG: {
-                return TagViewHolder.newInstance(parent, callback);
+            case ViewType.CARD: {
+                return CardViewHolder.newInstance(parent, callback);
             }
             default: {
                 throw new RuntimeException("ViewHolder not found");
@@ -64,8 +64,8 @@ public class CardDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((LabelValueViewHolder) holder).bindItem((LabelValueRecyclerItem) item);
                 return;
             }
-            case ViewType.TAG: {
-                ((TagViewHolder) holder).bindToView((Tag) item);
+            case ViewType.CARD: {
+                ((CardViewHolder) holder).bindToView((Card) item);
                 return;
             }
             default: {
@@ -86,7 +86,7 @@ public class CardDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
-    public interface Callback extends TagViewHolder.Callback {
+    public interface Callback extends CardViewHolder.Callback {
         List<RecyclerItem> getRecyclerItemList();
     }
 
