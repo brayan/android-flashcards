@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_front">Frente</string>
+    <string name="label_back">Verso</string>
     <string name="hint_insert_front_content">Insira o conteúdo da frente do cartão</string>
-    <string name="hint_insert_back_content">Insira o conteúdo de trás do cartão</string>
-    <string name="label_back">Trás</string>
+    <string name="hint_insert_back_content">Insira o conteúdo do verso do cartão</string>
     <string name="msg_insert_front">É necessário inserir o conteúdo da frente do cartão</string>
-    <string name="msg_insert_back">É necessário inserir o conteúdo de trás do cartão</string>
+    <string name="msg_insert_back">É necessário inserir o conteúdo do verso do cartão</string>
     <string name="title_new_card">Novo Cartão</string>
     <string name="title_edit_card">Editar Cartão</string>
     <string name="no_cards_found">Nenhum cartão encontrado</string>
+    <string name="label_tags">Tags</string>
 </resources>

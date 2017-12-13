@@ -80,6 +80,7 @@ public class TagSQLite extends BaseSQLite {
     }
 
 
+
     public void save(Tag tag) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" INSERT INTO Tag ");
@@ -163,11 +164,4 @@ public class TagSQLite extends BaseSQLite {
     }
 
 
-    public void deleteRelationshipsByTag(long tagId) {
-        String sql = "DELETE FROM CardTag WHERE CardTag.tagId = ?";
-        SQLiteStatement statement = compileStatement(sql);
-        statement.bindLong(1, tagId);
-
-        delete(statement);
-    }
 }

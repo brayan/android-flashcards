@@ -1,10 +1,10 @@
 package br.com.sailboat.flashcards.model;
 
-import java.io.Serializable;
-
 import br.com.sailboat.canoe.helper.EntityHelper;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
+import br.com.sailboat.flashcards.helper.ViewType;
 
-public class Tag implements Serializable {
+public class Tag implements RecyclerItem {
 
     private long id = EntityHelper.NO_ID;
     private String name;
@@ -25,4 +25,8 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public int getViewType() {
+        return ViewType.TAG;
+    }
 }

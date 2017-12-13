@@ -37,7 +37,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            CreateTablesHelper.createTables(db, getTodozyTables());
+            CreateTablesHelper.createTables(db, getSQLiteTables());
         } catch (Exception e) {
             LogHelper.logException(e);
         }
@@ -48,7 +48,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // TODO
     }
 
-    private  List<BaseSQLite> getTodozyTables() {
+    private  List<BaseSQLite> getSQLiteTables() {
         List<BaseSQLite> tables = new ArrayList<>();
         tables.add(CardSQLite.newInstance(context));
         tables.add(TagSQLite.newInstance(context));

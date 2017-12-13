@@ -177,7 +177,6 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         Card card = new Card();
         card.setFront(getViewModel().getFront());
         card.setBack(getViewModel().getBack());
-        card.setEnabled(true);
 
         if (hasCardToEdit()) {
             card.setId(getViewModel().getCardId());

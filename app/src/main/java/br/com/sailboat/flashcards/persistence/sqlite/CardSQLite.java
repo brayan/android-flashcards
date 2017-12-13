@@ -36,8 +36,7 @@ public class CardSQLite extends BaseSQLite {
         sb.append(" CREATE TABLE Card ( ");
         sb.append(" id INTEGER PRIMARY KEY AUTOINCREMENT, ");
         sb.append(" front TEXT NOT NULL, ");
-        sb.append(" back TEXT NOT NULL, ");
-        sb.append(" enabled INTEGER ");
+        sb.append(" back TEXT NOT NULL ");
         sb.append(" ); ");
 
         return sb.toString();
@@ -80,13 +79,12 @@ public class CardSQLite extends BaseSQLite {
         StringBuilder sql = new StringBuilder();
 
         sql.append(" INSERT INTO Card ");
-        sql.append(" (front, back, enabled) ");
-        sql.append(" VALUES (?, ?, ?); ");
+        sql.append(" (front, back) ");
+        sql.append(" VALUES (?, ?); ");
 
         SQLiteStatement stmt = compileStatement(sql.toString());
         stmt.bindString(1, card.getFront());
         stmt.bindString(2, card.getBack());
-        stmt.bindLong(3, parseBooleanToInt(card.isEnabled()));
 
         long id = insert(stmt);
         card.setId(id);
@@ -96,17 +94,23 @@ public class CardSQLite extends BaseSQLite {
         StringBuilder sql = new StringBuilder();
         sql.append(" UPDATE Card SET ");
         sql.append(" front = ?, ");
-        sql.append(" back = ?, ");
-        sql.append(" enabled = ? ");
+        sql.append(" back = ? ");
         sql.append(" WHERE id = ? ");
 
         SQLiteStatement statement = compileStatement(sql.toString());
         statement.bindString(1, card.getFront());
         statement.bindString(2, card.getBack());
-        statement.bindLong(3, parseBooleanToInt(card.isEnabled()));
-        statement.bindLong(4, card.getId());
+        statement.bindLong(3, card.getId());
 
         update(statement);
+    }
+
+    public void delete(long cardId) {
+        String sql = "DELETE FROM Card WHERE Card.id = ?";
+        SQLiteStatement statement = compileStatement(sql);
+        statement.bindLong(1, cardId);
+
+        delete(statement);
     }
 
     private Card buildFromCursor(Cursor cursor) throws Exception {
@@ -114,7 +118,6 @@ public class CardSQLite extends BaseSQLite {
         task.setId(getLong(cursor, "id"));
         task.setFront(getString(cursor, "front"));
         task.setBack(getString(cursor, "back"));
-        task.setEnabled(getBoolean(cursor, "enabled"));
 
         return task;
     }
@@ -133,6 +136,5 @@ public class CardSQLite extends BaseSQLite {
 
         return tasks;
     }
-
 
 }

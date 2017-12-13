@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.view.detail.CardDetailActivity;
 import br.com.sailboat.flashcards.view.insert.InsertCardActivity;
 
 
@@ -51,7 +52,7 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     public void startCardDetailsActivity(long taskId) {
-//        TaskDetailActivity.start(this, taskId);
+        CardDetailActivity.start(this, taskId);
     }
 
     @Override
