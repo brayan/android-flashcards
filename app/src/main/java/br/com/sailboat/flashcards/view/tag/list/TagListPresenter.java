@@ -7,10 +7,7 @@ import java.util.List;
 
 import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
-import br.com.sailboat.canoe.helper.LogHelper;
-import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
-import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.persistence.filter.Filter;
 import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
@@ -40,24 +37,8 @@ public class TagListPresenter extends BasePresenter<TagListPresenter.View> imple
         view.startNewTagDialog();
     }
 
-    public void onClickOkInputTag(String text) {
-        try {
-            if (StringHelper.isNotEmpty(text)) {
-                Tag tag = new Tag();
-                tag.setName(text);
-
-                TagSQLite.newInstance(getContext()).save(tag);
-
-                loadTags();
-
-            } else {
-                view.showMessageDialog(getString(R.string.msg_insert_tag));
-            }
-
-        } catch (Exception e) {
-            LogHelper.logException(e);
-            view.showMessageDialog(e.getMessage());
-        }
+    public void onClickOkInsertTag() {
+        loadTags();
     }
 
     public void postActivityResult() {

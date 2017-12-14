@@ -46,11 +46,10 @@ public class CardViewHolder extends BaseViewHolder {
     }
 
     private void bindListeners() {
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                callback.onLongClickCard(getAdapterPosition());
-                return true;
+            public void onClick(View v) {
+                callback.onClickCard(getAdapterPosition());
             }
         });
     }
@@ -64,7 +63,7 @@ public class CardViewHolder extends BaseViewHolder {
     }
 
     public interface Callback {
-        void onLongClickCard(int position);
+        void onClickCard(int position);
     }
 
 }

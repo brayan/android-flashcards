@@ -27,7 +27,7 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
     }
 
     @Override
-    public void onLongClickCard(int position) {
+    public void onClickCard(int position) {
         Card card = (Card) getRecyclerItemList().get(position);
         view.startCardDetailsActivity(card.getId());
     }

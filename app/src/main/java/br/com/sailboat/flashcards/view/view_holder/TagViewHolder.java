@@ -42,7 +42,7 @@ public class TagViewHolder extends BaseViewHolder {
     }
 
     private void inflateViews() {
-        tvName = itemView.findViewById(R.id.vh_tag__tv__name);
+        tvName = itemView.findViewById(R.id.tag__tv__name);
     }
 
     private void bindListeners() {

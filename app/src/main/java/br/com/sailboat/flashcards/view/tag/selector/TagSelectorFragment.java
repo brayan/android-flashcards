@@ -11,11 +11,11 @@ import android.view.View;
 import java.util.List;
 
 import br.com.sailboat.canoe.base.BaseFragment;
-import br.com.sailboat.canoe.dialog.InputTextDialog;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
 
 
 public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> implements TagSelectorPresenter.View, TagSelectorAdapter.Callback {
@@ -70,10 +70,10 @@ public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> impl
 
     @Override
     public void startInsertTag() {
-        InputTextDialog.show(getFragmentManager(), null, new InputTextDialog.Callback() {
+        InsertTagDialog.show(getFragmentManager(), null, new InsertTagDialog.Callback() {
             @Override
-            public void onClickOk(String text) {
-                presenter.onClickOkInsertTag(text);
+            public void onClickOk() {
+                presenter.onClickOkInsertTag();
             }
         });
     }

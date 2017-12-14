@@ -15,4 +15,6 @@
     <string name="msg_insert_tag">You must insert the content of the tag</string>
     <string name="title_tag_details">Tag Details</string>
     <string name="label_cards">Cards</string>
+    <string name="edit_tag">Edit Tag</string>
+    <string name="new_tag">New Tag</string>
 </resources>

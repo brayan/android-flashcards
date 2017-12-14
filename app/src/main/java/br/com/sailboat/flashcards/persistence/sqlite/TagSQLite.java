@@ -47,7 +47,7 @@ public class TagSQLite extends BaseSQLite {
             sb.append(" WHERE Tag.name LIKE '%" + filter.getSearchText() +"%'");
         }
 
-        sb.append(" ORDER BY Tag.name ");
+        sb.append(" ORDER BY Tag.name COLLATE NOCASE ");
 
         return getTagsFromCursor(sb);
     }
@@ -58,7 +58,7 @@ public class TagSQLite extends BaseSQLite {
         sb.append(" INNER JOIN CardTag ");
         sb.append(" ON (Tag.id = CardTag.tagId) ");
         sb.append(" WHERE CardTag.cardId = " + cardId + " ");
-        sb.append(" ORDER BY Tag.name ");
+        sb.append(" ORDER BY Tag.name COLLATE NOCASE ");
 
         return getTagsFromCursor(sb);
     }
@@ -123,14 +123,6 @@ public class TagSQLite extends BaseSQLite {
         cursor.close();
 
         return tags;
-    }
-
-    public void deleteRelationshipsByCard(long cardId) {
-        String sql = "DELETE FROM CardTag WHERE CardTag.cardId = ?";
-        SQLiteStatement statement = compileStatement(sql);
-        statement.bindLong(1, cardId);
-
-        delete(statement);
     }
 
     public void delete(long tagId) {

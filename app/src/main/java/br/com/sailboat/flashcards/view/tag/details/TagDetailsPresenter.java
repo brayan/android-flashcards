@@ -38,8 +38,7 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
 
     @Override
     public void onClickFab() {
-        // TODO
-        getView().startInsertTag(getViewModel().getTagId());
+        getView().startInsertTag(getViewModel().getTag());
     }
 
     public void onClickMenuDelete() {
@@ -85,6 +84,10 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
     public void onClickCard(int position) {
         Card card = (Card) viewModel.getRecyclerItemList().get(position);
         view.startCardDetails(card.getId());
+    }
+
+    public void onInsertTag() {
+        loadDetails();
     }
 
     private void loadDetails() {
@@ -134,9 +137,10 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
         return viewModel;
     }
 
+
     public interface View extends BasePresenter.View {
         void showDialogDeleteTag();
-        void startInsertTag(long taskId);
+        void startInsertTag(Tag tag);
         void startCardDetails(long cardId);
     }
 

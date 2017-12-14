@@ -5,9 +5,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import br.com.sailboat.canoe.base.BaseFragment;
-import br.com.sailboat.canoe.dialog.InputTextDialog;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
 import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
 
 
@@ -57,10 +57,10 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
     @Override
     public void startNewTagDialog() {
-        InputTextDialog.show(getFragmentManager(), null, new InputTextDialog.Callback() {
+        InsertTagDialog.show(getFragmentManager(), null, new InsertTagDialog.Callback() {
             @Override
-            public void onClickOk(String text) {
-                presenter.onClickOkInputTag(text);
+            public void onClickOk() {
+                presenter.onClickOkInsertTag();
             }
         });
     }

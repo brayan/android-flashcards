@@ -10,7 +10,6 @@ import java.util.List;
 import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
-import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
@@ -180,24 +179,8 @@ public class TagSelectorPresenter extends BasePresenter<TagSelectorPresenter.Vie
         return tags;
     }
 
-    public void onClickOkInsertTag(String text) {
-        try {
-            if (StringHelper.isNotEmpty(text)) {
-                Tag tag = new Tag();
-                tag.setName(text);
-
-                TagSQLite.newInstance(getContext()).save(tag);
-
-                loadItems();
-
-            } else {
-                view.showMessageDialog(getString(R.string.msg_insert_tag));
-            }
-
-        } catch (Exception e) {
-            LogHelper.logException(e);
-            view.showMessageDialog(e.getMessage());
-        }
+    public void onClickOkInsertTag() {
+        loadItems();
     }
 
 
