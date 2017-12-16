@@ -11,11 +11,13 @@ import java.util.List;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.dialog.TwoOptionsDialog;
+import br.com.sailboat.canoe.helper.DialogHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
+import br.com.sailboat.flashcards.view.play.PlayActivity;
 import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
 
 public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implements TagDetailsPresenter.View, TagDetailsAdapter.Callback {
@@ -44,7 +46,7 @@ public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implem
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_delete, menu);
+        inflater.inflate(R.menu.menu_tag_details, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -81,16 +83,12 @@ public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implem
 
     @Override
     public void showDialogDeleteTag() {
-        TwoOptionsDialog dialog = new TwoOptionsDialog();
-        dialog.setMessage(getString(R.string.are_you_sure));
-        dialog.setPositiveMsg(getString(R.string.delete));
-        dialog.setPositiveCallback(new TwoOptionsDialog.PositiveCallback() {
+        DialogHelper.showDeleteDialog(getFragmentManager(), getActivity(), new TwoOptionsDialog.PositiveCallback() {
             @Override
             public void onClickPositiveOption() {
                 getPresenter().onClickDeleteTag();
             }
         });
-        dialog.show(getFragmentManager(), TwoOptionsDialog.class.getCanonicalName());
     }
 
     @Override
@@ -109,8 +107,17 @@ public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implem
     }
 
     @Override
+    public void startPlayActivity(long tagId) {
+        PlayActivity.start(this, tagId);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_play: {
+                presenter.onClickMenuPlay();
+                return true;
+            }
             case R.id.menu_delete: {
                 getPresenter().onClickMenuDelete();
                 return true;

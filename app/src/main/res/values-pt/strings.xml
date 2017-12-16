@@ -16,4 +16,5 @@
     <string name="label_cards">Cartões</string>
     <string name="edit_tag">Editar Tag</string>
     <string name="new_tag">Nova Tag</string>
+    <string name="show_back_of_the_card">MOSTRAR VERSO DO CARTÃO</string>
 </resources>

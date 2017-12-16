@@ -14,6 +14,7 @@ import br.com.sailboat.canoe.exception.EntityNotFoundException;
 import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.model.Card;
+import br.com.sailboat.flashcards.model.view.CardPlay;
 import br.com.sailboat.flashcards.persistence.DatabaseOpenHelper;
 import br.com.sailboat.flashcards.persistence.filter.Filter;
 
@@ -65,6 +66,44 @@ public class CardSQLite extends BaseSQLite {
         sb.append(" WHERE CardTag.tagId = " + tagId);
 
         return getCardList(sb.toString());
+    }
+
+    public List<CardPlay> getCardPlayListByTag(long tagId) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT Card.id FROM Card ");
+        sb.append(" INNER JOIN CardTag ON (Card.id = CardTag.cardId) ");
+        sb.append(" WHERE CardTag.tagId = " + tagId);
+
+        Cursor cursor = performQuery(sb.toString());
+        List<CardPlay> cards = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            CardPlay card = new CardPlay();
+            card.setCardId(getLong(cursor, "id"));
+            cards.add(card);
+        }
+
+        cursor.close();
+
+        return cards;
+    }
+
+    public List<CardPlay> getCardPlayList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT Card.id FROM Card ");
+
+        Cursor cursor = performQuery(sb.toString());
+        List<CardPlay> cards = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            CardPlay card = new CardPlay();
+            card.setCardId(getLong(cursor, "id"));
+            cards.add(card);
+        }
+
+        cursor.close();
+
+        return cards;
     }
 
     public List<RecyclerItem> getAll(Filter filter) throws Exception {
@@ -145,5 +184,6 @@ public class CardSQLite extends BaseSQLite {
 
         return tasks;
     }
+
 
 }

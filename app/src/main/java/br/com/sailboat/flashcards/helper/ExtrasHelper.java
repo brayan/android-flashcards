@@ -8,13 +8,31 @@ import java.util.List;
 
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.model.view.CardPlay;
 
 public class ExtrasHelper {
 
+    private static final String CARD_PLAY = "CARD_PLAY";
     private static final String CARD_ID = "CARD_ID";
     private static final String TAG_ID = "TAG_ID";
     private static final String CARD_LIST = "CARD_LIST";
     private static final String TAG_LIST = "TAG_LIST";
+
+    public static void putCardPlay(CardPlay cardPlay, Intent intent) {
+        intent.putExtra(CARD_PLAY, cardPlay);
+    }
+
+    public static CardPlay getCardPlay(Intent intent) {
+        return (CardPlay) intent.getSerializableExtra(CARD_PLAY);
+    }
+
+    public static void putCardPlay(CardPlay cardPlay, Bundle bundle) {
+        bundle.putSerializable(CARD_PLAY, cardPlay);
+    }
+
+    public static CardPlay getCardPlay(Bundle bundle) {
+        return (CardPlay) bundle.getSerializable(CARD_PLAY);
+    }
 
     public static void putCardId(long taskId, Intent intent) {
         intent.putExtra(CARD_ID, taskId);

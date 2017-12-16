@@ -14,6 +14,39 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/card_metrics__ll__not_answerd"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="4dp"
+                android:background="@drawable/shape_circle"
+                android:tint="@color/md_blue_500"
+                app:srcCompat="@drawable/ic_help_white_24dp"/>
+
+            <TextView
+                android:id="@+id/card_metrics__tv__not_answerd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="4dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
+                tools:text="100000000000000000000000000000000000000000000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:paddingRight="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +63,7 @@
                 app:srcCompat="@drawable/ic_thumb_up_white_24dp"/>
 
             <TextView
-                android:id="@+id/card_metrics__tv__done"
+                android:id="@+id/card_metrics__tv__right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -59,7 +92,7 @@
                 android:tint="@color/md_red_300"/>
 
             <TextView
-                android:id="@+id/card_metrics__tv__not_done"
+                android:id="@+id/card_metrics__tv__wrong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

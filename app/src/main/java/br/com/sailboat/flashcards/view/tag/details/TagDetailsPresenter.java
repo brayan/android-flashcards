@@ -137,11 +137,16 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
         return viewModel;
     }
 
+    public void onClickMenuPlay() {
+        view.startPlayActivity(viewModel.getTagId());
+    }
+
 
     public interface View extends BasePresenter.View {
         void showDialogDeleteTag();
         void startInsertTag(Tag tag);
         void startCardDetails(long cardId);
+        void startPlayActivity(long tagId);
     }
 
 }

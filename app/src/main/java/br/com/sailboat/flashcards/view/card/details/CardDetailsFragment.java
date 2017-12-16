@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.dialog.TwoOptionsDialog;
+import br.com.sailboat.canoe.helper.DialogHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
@@ -99,16 +100,12 @@ public class CardDetailsFragment extends BaseFragment<CardDetailsPresenter> impl
 
     @Override
     public void showDialogDeleteCard() {
-        TwoOptionsDialog dialog = new TwoOptionsDialog();
-        dialog.setMessage(getString(R.string.are_you_sure));
-        dialog.setPositiveMsg(getString(R.string.delete));
-        dialog.setPositiveCallback(new TwoOptionsDialog.PositiveCallback() {
+        DialogHelper.showDeleteDialog(getFragmentManager(), getActivity(), new TwoOptionsDialog.PositiveCallback() {
             @Override
             public void onClickPositiveOption() {
                 getPresenter().onClickDeleteTask();
             }
         });
-        dialog.show(getFragmentManager(), "DELETE_TASK");
     }
 
     @Override
@@ -140,8 +137,8 @@ public class CardDetailsFragment extends BaseFragment<CardDetailsPresenter> impl
 
     private void initMetricViews() {
         viewMetrics = getView().findViewById(R.id.appbar_card_details__fl__metrics);
-        tvNotDone = getView().findViewById(R.id.card_metrics__tv__not_done);
-        tvDone = getView().findViewById(R.id.card_metrics__tv__done);
+        tvNotDone = getView().findViewById(R.id.card_metrics__tv__wrong);
+        tvDone = getView().findViewById(R.id.card_metrics__tv__right);
     }
 
 }

@@ -17,4 +17,5 @@
     <string name="label_cards">Cards</string>
     <string name="edit_tag">Edit Tag</string>
     <string name="new_tag">New Tag</string>
+    <string name="show_back_of_the_card">SHOW BACK OF THE CARD</string>
 </resources>

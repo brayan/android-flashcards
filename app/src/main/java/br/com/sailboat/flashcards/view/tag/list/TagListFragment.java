@@ -3,10 +3,12 @@ package br.com.sailboat.flashcards.view.tag.list;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.view.play.PlayActivity;
 import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
 import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
 
@@ -25,8 +27,23 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_tag_list, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_play: {
+                presenter.onClickMenuPlay();
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
     }
 
     @Override
@@ -53,6 +70,11 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
     @Override
     public void startTagDetailsActivity(long taskId) {
         TagDetailsActivity.start(this, taskId);
+    }
+
+    @Override
+    public void startPlayActivity() {
+        PlayActivity.start(this);
     }
 
     @Override
