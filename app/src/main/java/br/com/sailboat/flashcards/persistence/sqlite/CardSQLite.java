@@ -65,7 +65,7 @@ public class CardSQLite extends BaseSQLite {
         sb.append(" INNER JOIN CardTag ON (Card.id = CardTag.cardId) ");
         sb.append(" WHERE CardTag.tagId = " + tagId);
 
-        return getCardList(sb.toString());
+        return getCardList(sb.toString(), null);
     }
 
     public List<CardPlay> getCardPlayListByTag(long tagId) throws Exception {
@@ -115,12 +115,12 @@ public class CardSQLite extends BaseSQLite {
             sb.append(" WHERE 1=1 ");
 
             if (StringHelper.isNotEmpty(filter.getSearchText())) {
-                sb.append(" AND Card.front LIKE '%" + filter.getSearchText() + "%' ");
+                sb.append(" AND Card.front LIKE ? ");
             }
 
         }
 
-        return new ArrayList<RecyclerItem>(getCardList(sb.toString()));
+        return new ArrayList<RecyclerItem>(getCardList(sb.toString(), filter));
     }
 
     public void save(Card card) throws Exception {
@@ -171,8 +171,8 @@ public class CardSQLite extends BaseSQLite {
     }
 
     @NonNull
-    private List<Card> getCardList(String query) throws Exception {
-        Cursor cursor = performQuery(query.toString());
+    private List<Card> getCardList(String query, Filter filter) throws Exception {
+        Cursor cursor = performQuery(query.toString(), filter);
         List<Card> tasks = new ArrayList<>();
 
         while (cursor.moveToNext()) {

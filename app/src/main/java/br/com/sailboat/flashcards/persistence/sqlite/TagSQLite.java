@@ -44,12 +44,12 @@ public class TagSQLite extends BaseSQLite {
         sb.append(" SELECT Tag.* FROM Tag ");
 
         if (filter != null && StringHelper.isNotEmpty(filter.getSearchText())) {
-            sb.append(" WHERE Tag.name LIKE '%" + filter.getSearchText() +"%'");
+            sb.append(" WHERE Tag.name LIKE ? ");
         }
 
         sb.append(" ORDER BY Tag.name COLLATE NOCASE ");
 
-        return getTagsFromCursor(sb);
+        return getTagsFromCursor(sb, filter);
     }
 
     public List<Tag> getByCard(long cardId) throws Exception {
@@ -60,7 +60,7 @@ public class TagSQLite extends BaseSQLite {
         sb.append(" WHERE CardTag.cardId = " + cardId + " ");
         sb.append(" ORDER BY Tag.name COLLATE NOCASE ");
 
-        return getTagsFromCursor(sb);
+        return getTagsFromCursor(sb, null);
     }
 
     public Tag getTagById(long tagId) throws Exception {
@@ -111,8 +111,8 @@ public class TagSQLite extends BaseSQLite {
     }
 
     @NonNull
-    private List<Tag> getTagsFromCursor(StringBuilder query) throws Exception {
-        Cursor cursor = performQuery(query.toString());
+    private List<Tag> getTagsFromCursor(StringBuilder query, BaseFilter filter) throws Exception {
+        Cursor cursor = performQuery(query.toString(), filter);
         List<Tag> tags = new ArrayList<>();
 
         while (cursor.moveToNext()) {
