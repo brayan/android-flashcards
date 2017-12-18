@@ -1,7 +1,6 @@
 package br.com.sailboat.flashcards.view.play.card_play;
 
 import android.animation.Animator;
-import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +18,7 @@ import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.view.CardPlay;
 
 
-public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements CardPlayPresenter.View, View.OnClickListener {
+public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements CardPlayPresenter.View {
 
     private LinearLayout llShowBackContent;
     private LinearLayout llRightAnswer;
@@ -64,23 +63,7 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
         tvBackOfTheCard = getView().findViewById(R.id.frg_card_play__tv__back);
         ivRightAnswer = getView().findViewById(R.id.frg_card_play__iv__right);
         ivWrongAnswer = getView().findViewById(R.id.frg_card_play__iv__wrong);
-
-        rlShowBack.setOnClickListener(this);
-        tvBackOfTheCard.setOnClickListener(this);
-
-        llRightAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClickRightAnswer();
-            }
-        });
-
-        llWrongAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClickWrongAnswer();
-            }
-        });
+        initListeners();
     }
 
     @Override
@@ -101,11 +84,6 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
     @Override
     public void hideBackOfTheCardWithAnimation() {
         AnimationHelper.collapse(llShowBackContent);
-    }
-
-    @Override
-    public void updateMetrics() {
-        // TODO:
     }
 
     @Override
@@ -149,98 +127,71 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
 
     @Override
     public void setRightAnswerAsSelectedWithAnimation() {
-        // TODO: PUT ON ANIMATION HELPER
-
-
         ImageViewColorHelper.setColorOfVector(getActivity(), ivRightAnswer, R.color.md_white_1000);
 
         int colorFrom = ContextCompat.getColor(getActivity(), R.color.md_white_1000);
         int colorTo = ContextCompat.getColor(getActivity(), R.color.md_teal_300);
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(1500);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1500,
+                new AnimationHelper.BackgroundColorCallback() {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
                 llRightAnswer.setBackgroundColor((int) animator.getAnimatedValue());
             }
 
-        });
-        colorAnimation.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
             @Override
             public void onAnimationEnd(Animator animation) {
+                setWrongAnswerAsNotSelected();
                 presenter.onAnimationEnd();
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
         });
-        colorAnimation.start();
-
     }
 
     @Override
     public void setWrongAnswerAsSelectedWithAnimation() {
-        // TODO: PUT ON ANIMATION HELPER
         ImageViewColorHelper.setColorOfVector(getActivity(), ivWrongAnswer, R.color.md_white_1000);
 
         int colorFrom = ContextCompat.getColor(getActivity(), R.color.md_white_1000);
         int colorTo = ContextCompat.getColor(getActivity(), R.color.md_red_300);
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(1500);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1500,
+                new AnimationHelper.BackgroundColorCallback() {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
                 llWrongAnswer.setBackgroundColor((int) animator.getAnimatedValue());
             }
 
-        });
-        colorAnimation.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
             @Override
             public void onAnimationEnd(Animator animation) {
+                setRightAnswerAsNotSelected();
                 presenter.onAnimationEnd();
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
         });
-        colorAnimation.start();
     }
 
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.frg_card_play__rl__show_back: {
-                getPresenter().onClickShowBackOfTheCard();
-                return;
+    private void initListeners() {
+        rlShowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickShowBackOfTheCard();
             }
-        }
+        });
+
+        llRightAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickRightAnswer();
+            }
+        });
+
+        llWrongAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickWrongAnswer();
+            }
+        });
     }
 
     public Callback getCallback() {
@@ -255,5 +206,6 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
     public interface Callback {
         void onClickAnswer(CardPlay cardPlay);
     }
+
 
 }

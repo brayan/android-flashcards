@@ -12,6 +12,8 @@ import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.interactor.CardDetailsLoader;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.model.view.CardMetrics;
+import br.com.sailboat.flashcards.persistence.sqlite.CardHistorySQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardTagSQLite;
 
@@ -48,7 +50,7 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
         loadDetails();
     }
 
-    public void onClickDeleteTask() {
+    public void onClickDeleteCard() {
         showProgress();
 
         AsyncHelper.execute(new AsyncHelper.Callback() {
@@ -56,7 +58,8 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
             @Override
             public void doInBackground() throws Exception {
                 long cardId = getViewModel().getCardId();
-                CardTagSQLite.newInstance(getContext()).deleteByCardId(cardId);
+                CardTagSQLite.newInstance(getContext()).deleteByCard(cardId);
+                CardHistorySQLite.newInstance(getContext()).deleteByCard(cardId);
                 CardSQLite.newInstance(getContext()).delete(cardId);
             }
 
@@ -104,10 +107,11 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
                 card = CardSQLite.newInstance(getContext()).getCardById(cardId);
                 cardDetails = CardDetailsLoader.loadCardDetails(getContext(), cardId);
 
-//                TaskHistorySQLite sqlite = TaskHistorySQLite.newInstance(getContext());
-//                getViewModel().getTaskMetrics().setDoneTasks(sqlite.getAmountOfDoneTasks(cardId));
-//                getViewModel().getTaskMetrics().setNotDoneTasks(sqlite.getAmountOfNotDoneTasks(cardId));
+                CardMetrics cardMetrics = viewModel.getCardMetrics();
 
+                CardHistorySQLite sqlite = CardHistorySQLite.newInstance(getContext());
+                cardMetrics.setRightAnswers(sqlite.getAmountOfRightAnswers(cardId));
+                cardMetrics.setWrongAnswers(sqlite.getAmountOfWrongAnswers(cardId));
             }
 
             @Override
@@ -141,6 +145,7 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
     private CardDetailsViewModel getViewModel() {
         return viewModel;
     }
+
 
     public interface View extends BasePresenter.View {
         void setRightAnswers(String amount);

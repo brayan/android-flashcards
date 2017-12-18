@@ -6,18 +6,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import br.com.sailboat.canoe.helper.EntityHelper;
+import br.com.sailboat.flashcards.model.view.CardMetrics;
 import br.com.sailboat.flashcards.model.view.CardPlay;
 
 
 public class PlayViewModel implements Serializable{
 
     private long tagId = EntityHelper.NO_ID;
-    private int rightAnswers = 0;
-    private int wrongAnswers = 0;
-    private int notAnswerd = 0;
+    private CardMetrics cardMetrics = new CardMetrics();
     private final LinkedHashMap<Long, CardPlay> selectedCards = new LinkedHashMap<>();
     private final List<CardPlay> cardPlayList = new ArrayList<>();
-
 
     public long getTagId() {
         return tagId;
@@ -25,6 +23,14 @@ public class PlayViewModel implements Serializable{
 
     public void setTagId(long tagId) {
         this.tagId = tagId;
+    }
+
+    public CardMetrics getCardMetrics() {
+        return cardMetrics;
+    }
+
+    public void setCardMetrics(CardMetrics cardMetrics) {
+        this.cardMetrics = cardMetrics;
     }
 
     public LinkedHashMap<Long, CardPlay> getSelectedCards() {
@@ -35,27 +41,4 @@ public class PlayViewModel implements Serializable{
         return cardPlayList;
     }
 
-    public int getRightAnswers() {
-        return rightAnswers;
-    }
-
-    public void setRightAnswers(int rightAnswers) {
-        this.rightAnswers = rightAnswers;
-    }
-
-    public int getWrongAnswers() {
-        return wrongAnswers;
-    }
-
-    public void setWrongAnswers(int wrongAnswers) {
-        this.wrongAnswers = wrongAnswers;
-    }
-
-    public int getNotAnswerd() {
-        return notAnswerd;
-    }
-
-    public void setNotAnswerd(int notAnswerd) {
-        this.notAnswerd = notAnswerd;
-    }
 }

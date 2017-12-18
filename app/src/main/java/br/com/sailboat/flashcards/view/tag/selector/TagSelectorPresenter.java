@@ -8,13 +8,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import br.com.sailboat.canoe.base.BasePresenter;
+import br.com.sailboat.canoe.filter.Filter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.Tag;
-import br.com.sailboat.flashcards.persistence.filter.Filter;
 import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
 
 public class TagSelectorPresenter extends BasePresenter<TagSelectorPresenter.View> {

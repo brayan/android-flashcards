@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sailboat.canoe.base.BasePresenter;
+import br.com.sailboat.canoe.filter.Filter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.model.Card;
-import br.com.sailboat.flashcards.persistence.filter.Filter;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
 
 public class CardListPresenter extends BasePresenter<CardListPresenter.View> implements CardListAdapter.Callback {

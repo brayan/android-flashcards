@@ -11,12 +11,12 @@ import java.util.List;
 
 import br.com.sailboat.canoe.base.BaseSQLite;
 import br.com.sailboat.canoe.exception.EntityNotFoundException;
+import br.com.sailboat.canoe.filter.Filter;
 import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.view.CardPlay;
 import br.com.sailboat.flashcards.persistence.DatabaseOpenHelper;
-import br.com.sailboat.flashcards.persistence.filter.Filter;
 
 
 public class CardSQLite extends BaseSQLite {

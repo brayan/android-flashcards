@@ -183,7 +183,7 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
 
             private void prepareAndSaveTags() {
                 CardTagSQLite dao = CardTagSQLite.newInstance(getContext());
-                dao.deleteByCardId(card.getId());
+                dao.deleteByCard(card.getId());
 
                 for (RecyclerItem tag : getViewModel().getTags()) {
                     dao.save(card.getId(), ((Tag) tag).getId());

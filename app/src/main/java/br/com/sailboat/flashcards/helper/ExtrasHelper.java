@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
+import br.com.sailboat.flashcards.model.view.CardMetrics;
 import br.com.sailboat.flashcards.model.view.CardPlay;
 
 public class ExtrasHelper {
@@ -17,6 +18,8 @@ public class ExtrasHelper {
     private static final String TAG_ID = "TAG_ID";
     private static final String CARD_LIST = "CARD_LIST";
     private static final String TAG_LIST = "TAG_LIST";
+    private static final String CARD_METRICS = "CARD_METRICS";
+    private static final String CARD_PLAY_LIST = "CARD_PLAY_LIST";
 
     public static void putCardPlay(CardPlay cardPlay, Intent intent) {
         intent.putExtra(CARD_PLAY, cardPlay);
@@ -121,4 +124,37 @@ public class ExtrasHelper {
     public static boolean hasTaskId(Intent intent) {
         return intent.hasExtra(CARD_ID);
     }
+
+    public static void putCardMetrics(CardMetrics cardMetrics, Intent intent) {
+        intent.putExtra(CARD_METRICS, cardMetrics);
+    }
+
+    public static void putCardMetrics(CardMetrics cardMetrics, Bundle bundle) {
+        bundle.putSerializable(CARD_METRICS, cardMetrics);
+    }
+
+    public static CardMetrics getCardMetrics(Intent intent) {
+        return (CardMetrics) intent.getSerializableExtra(CARD_METRICS);
+    }
+
+    public static CardMetrics getCardMetrics(Bundle bundle) {
+        return (CardMetrics) bundle.getSerializable(CARD_METRICS);
+    }
+
+    public static void putCardPlayList(List<CardPlay> cards, Intent intent) {
+        intent.putExtra(CARD_PLAY_LIST, (ArrayList<CardPlay>) cards);
+    }
+
+    public static void putCardPlayList(List<CardPlay> cards, Bundle bundle) {
+        bundle.putSerializable(CARD_PLAY_LIST, (ArrayList<CardPlay>) cards);
+    }
+
+    public static List<CardPlay> getCardPlayList(Intent intent) {
+        return (List<CardPlay>) intent.getSerializableExtra(CARD_PLAY_LIST);
+    }
+
+    public static List<CardPlay> getCardPlayList(Bundle bundle) {
+        return (List<CardPlay>) bundle.getSerializable(CARD_PLAY_LIST);
+    }
+
 }

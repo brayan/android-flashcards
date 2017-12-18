@@ -1,9 +1,12 @@
 package br.com.sailboat.flashcards.model.view;
 
-public class CardMetrics {
+import java.io.Serializable;
+
+public class CardMetrics implements Serializable {
 
     private int rightAnswers;
     private int wrongAnswers;
+    private int notAnswerd;
 
     public int getRightAnswers() {
         return rightAnswers;
@@ -19,6 +22,14 @@ public class CardMetrics {
 
     public void setWrongAnswers(int wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
+    }
+
+    public int getNotAnswerd() {
+        return notAnswerd;
+    }
+
+    public void setNotAnswerd(int notAnswerd) {
+        this.notAnswerd = notAnswerd;
     }
 
 }

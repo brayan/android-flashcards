@@ -11,8 +11,11 @@ import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
+import br.com.sailboat.flashcards.model.CardHistory;
 import br.com.sailboat.flashcards.model.view.CardAnswer;
+import br.com.sailboat.flashcards.model.view.CardMetrics;
 import br.com.sailboat.flashcards.model.view.CardPlay;
+import br.com.sailboat.flashcards.persistence.sqlite.CardHistorySQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
 
 public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
@@ -97,9 +100,9 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
 
         int notAnswerd = viewModel.getCardPlayList().size() - (rightAnswers + wrongAnswers);
 
-        viewModel.setRightAnswers(rightAnswers);
-        viewModel.setWrongAnswers(wrongAnswers);
-        viewModel.setNotAnswerd(notAnswerd);
+        viewModel.getCardMetrics().setRightAnswers(rightAnswers);
+        viewModel.getCardMetrics().setWrongAnswers(wrongAnswers);
+        viewModel.getCardMetrics().setNotAnswerd(notAnswerd);
 
         view.setRightAnswers(String.valueOf(rightAnswers));
         view.setWrongAnswers(String.valueOf(wrongAnswers));
@@ -136,11 +139,8 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
         updateMetrics();
 
 
-        // if it has some not answerd, go there;
-
-        if (viewModel.getNotAnswerd() == 0) {
-            view.showToast("Well done! :)");
-            view.finish();
+        if (viewModel.getCardMetrics().getNotAnswerd() == 0) {
+            finishSession();
         } else {
             int notAnswerdIndex = -1;
             for (int i = 0; i < viewModel.getCardPlayList().size(); i++) {
@@ -160,6 +160,38 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
 
     }
 
+    public void onClickMenuFinishSession() {
+        finishSession();
+    }
+
+    private void finishSession() {
+        saveHistory();
+        showFlashCardsResult();
+    }
+
+    private void showFlashCardsResult() {
+        view.startSessionEndedActivity(viewModel.getCardMetrics(), viewModel.getCardPlayList());
+        view.finish();
+    }
+
+    private void saveHistory() {
+        try {
+            List<CardPlay> selectedCards = new ArrayList<>(viewModel.getSelectedCards().values());
+
+            CardHistorySQLite dao = CardHistorySQLite.newInstance(getContext());
+            for (CardPlay card : selectedCards) {
+                CardHistory history = new CardHistory();
+                history.setCardId(card.getCardId());
+                history.setAnswer(card.getAnswer());
+
+                dao.save(history);
+            }
+
+        } catch (Exception e) {
+            printLogAndShowDialog(e);
+        }
+    }
+
 
     public interface View extends BasePresenter.View {
         void updateViewPager();
@@ -168,6 +200,7 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
         void setNotAnswered(String notAnswerd);
         void swipeToNotAnswerdCard(int notAnswerdIndex);
         void finish();
+        void startSessionEndedActivity(CardMetrics cardMetrics, List<CardPlay> cardPlayList);
     }
 
 

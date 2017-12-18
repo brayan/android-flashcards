@@ -8,5 +8,6 @@ public class RequestCodeHelper {
     public static final int TAG_LIST = 8;
     public static final int SELECTOR_TAG = 9;
     public static final int PLAY = 10;
+    public static final int SESSION_ENDED = 11;
 
 }

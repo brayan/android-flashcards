@@ -3,6 +3,8 @@ package br.com.sailboat.flashcards.view.play;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,8 +17,9 @@ import br.com.sailboat.canoe.dialog.TwoOptionsDialog;
 import br.com.sailboat.canoe.helper.DialogHelper;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
+import br.com.sailboat.flashcards.model.view.CardMetrics;
 import br.com.sailboat.flashcards.model.view.CardPlay;
-import br.com.sailboat.flashcards.view.tag.list.TagListActivity;
+import br.com.sailboat.flashcards.view.session_ended.SessionEndedActivity;
 
 import static br.com.sailboat.flashcards.R.id.pager;
 
@@ -52,11 +55,17 @@ public class PlayFragment extends BaseFragment<PlayPresenter> implements PlayPre
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_play, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_card_list__tags: {
-                TagListActivity.start(this);
+            case R.id.menu_play_finish_session: {
+                presenter.onClickMenuFinishSession();
                 return true;
             }
             default: {
@@ -135,6 +144,11 @@ public class PlayFragment extends BaseFragment<PlayPresenter> implements PlayPre
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void startSessionEndedActivity(CardMetrics cardMetrics, List<CardPlay> cardPlayList) {
+        SessionEndedActivity.start(this, cardMetrics, cardPlayList);
     }
 
     public void onBackPressed() {

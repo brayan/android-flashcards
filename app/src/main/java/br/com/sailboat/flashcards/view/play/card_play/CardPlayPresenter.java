@@ -78,7 +78,6 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         view.setBackOfTheCard(viewModel.getCard().getBack());
         updateAlarmViews();
         updateRightOrWrongButtons();
-        view.updateMetrics();
     }
 
     private void updateRightOrWrongButtons() {
@@ -152,7 +151,6 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         void showBackOfTheCardWithAnimation();
         void hideBackOfTheCard();
         void hideBackOfTheCardWithAnimation();
-        void updateMetrics();
         void setFrontOfTheCard(String front);
         void setBackOfTheCard(String back);
         void setRightAnswerAsSelected();

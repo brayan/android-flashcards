@@ -47,7 +47,7 @@ public class CardTagSQLite extends BaseSQLite {
         insert(statement);
     }
 
-    public void deleteByCardId(long cardId) {
+    public void deleteByCard(long cardId) {
         String sql = "DELETE FROM CardTag WHERE CardTag.cardId = ?";
         SQLiteStatement statement = compileStatement(sql);
         statement.bindLong(1, cardId);

@@ -103,7 +103,7 @@ public class CardDetailsFragment extends BaseFragment<CardDetailsPresenter> impl
         DialogHelper.showDeleteDialog(getFragmentManager(), getActivity(), new TwoOptionsDialog.PositiveCallback() {
             @Override
             public void onClickPositiveOption() {
-                getPresenter().onClickDeleteTask();
+                getPresenter().onClickDeleteCard();
             }
         });
     }

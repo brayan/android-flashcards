@@ -17,4 +17,6 @@
     <string name="edit_tag">Editar Tag</string>
     <string name="new_tag">Nova Tag</string>
     <string name="show_back_of_the_card">MOSTRAR VERSO DO CARTÃO</string>
+    <string name="session_ended">Sessão Finalizada!</string>
+    <string name="finish_session">Finalizar Sessão</string>
 </resources>

@@ -32,6 +32,8 @@
 
         <activity android:name=".view.play.PlayActivity"/>
 
+        <activity android:name=".view.session_ended.SessionEndedActivity"/>
+
     </application>
 
 </manifest>

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.sailboat.canoe.filter.Filter;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
-import br.com.sailboat.flashcards.persistence.filter.Filter;
 
 
 public class CardListViewModel implements Serializable{

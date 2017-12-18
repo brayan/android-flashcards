@@ -1,10 +1,10 @@
 package br.com.sailboat.flashcards.model.view;
 
-import java.io.Serializable;
-
 import br.com.sailboat.canoe.helper.EntityHelper;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
+import br.com.sailboat.flashcards.helper.ViewType;
 
-public class CardPlay implements Serializable {
+public class CardPlay implements RecyclerItem {
 
     private long cardId = EntityHelper.NO_ID;
     private int answer = EntityHelper.NO_ID;
@@ -25,4 +25,10 @@ public class CardPlay implements Serializable {
     public void setAnswer(int answer) {
         this.answer = answer;
     }
+
+    @Override
+    public int getViewType() {
+        return ViewType.CARD_PLAY;
+    }
+
 }

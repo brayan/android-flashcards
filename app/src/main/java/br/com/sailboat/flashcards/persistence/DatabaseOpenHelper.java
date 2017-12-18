@@ -10,14 +10,15 @@ import java.util.List;
 import br.com.sailboat.canoe.base.BaseSQLite;
 import br.com.sailboat.canoe.helper.CreateTablesHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
+import br.com.sailboat.flashcards.persistence.sqlite.CardHistorySQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.CardTagSQLite;
 import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
-    private static final String DATABASE_NAME = "todozy.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "flashcards.db";
 
     private static DatabaseOpenHelper instance;
     private Context context;
@@ -53,6 +54,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         tables.add(CardSQLite.newInstance(context));
         tables.add(TagSQLite.newInstance(context));
         tables.add(CardTagSQLite.newInstance(context));
+        tables.add(CardHistorySQLite.newInstance(context));
 
         return tables;
     }
