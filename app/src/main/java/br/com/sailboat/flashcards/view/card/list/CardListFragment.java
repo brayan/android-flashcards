@@ -10,6 +10,7 @@ import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
 import br.com.sailboat.flashcards.view.card.insert.InsertCardActivity;
+import br.com.sailboat.flashcards.view.play.PlayActivity;
 import br.com.sailboat.flashcards.view.tag.list.TagListActivity;
 
 
@@ -17,7 +18,7 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     protected int getLayoutId() {
-        return R.layout.frg_card_list;
+        return R.layout.frg_list;
     }
 
     @Override
@@ -35,6 +36,10 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.menu_play: {
+                PlayActivity.start(this);
+                return true;
+            }
             case R.id.menu_card_list__tags: {
                 TagListActivity.start(this);
                 return true;
@@ -68,8 +73,8 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
     }
 
     @Override
-    public void startCardDetailsActivity(long taskId) {
-        CardDetailsActivity.start(this, taskId);
+    public void startCardDetailsActivity(long cardId) {
+        CardDetailsActivity.start(this, cardId);
     }
 
     @Override

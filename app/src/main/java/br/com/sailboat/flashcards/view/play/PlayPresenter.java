@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
+import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.CardHistory;
 import br.com.sailboat.flashcards.model.view.CardAnswer;
@@ -59,6 +60,10 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
                     cards = CardSQLite.newInstance(getContext()).getCardPlayList();
                 }
 
+                if (cards.isEmpty()) {
+                    throw new Exception(getString(R.string.no_cards_found));
+                }
+
             }
 
             @Override
@@ -71,8 +76,8 @@ public class PlayPresenter extends BasePresenter<PlayPresenter.View> {
 
             @Override
             public void onFail(Exception e) {
-                printLogAndShowDialog(e);
-                updateContentViews();
+                view.showToast(e.getMessage());
+                view.finish();
             }
 
         });

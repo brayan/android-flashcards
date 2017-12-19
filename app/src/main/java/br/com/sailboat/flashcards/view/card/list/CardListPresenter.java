@@ -104,7 +104,7 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
 
     public interface View extends BasePresenter.View {
         void startNewCardActivity();
-        void startCardDetailsActivity(long taskId);
+        void startCardDetailsActivity(long cardId);
     }
 
 }

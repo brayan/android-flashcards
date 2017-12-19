@@ -98,9 +98,9 @@ public class InsertTagDialog extends BaseDialogFragment {
 
 
         if (flashcardTag != null && StringHelper.isNotEmpty(flashcardTag.getName())) {
-            builder.setTitle(getString(R.string.edit_tag));
+            builder.setTitle(getString(R.string.title_edit_tag));
         } else {
-            builder.setTitle(getString(R.string.new_tag));
+            builder.setTitle(getString(R.string.title_new_tag));
         }
 
         Dialog dialog = builder.create();

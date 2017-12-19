@@ -114,7 +114,7 @@ public class TagListPresenter extends BasePresenter<TagListPresenter.View> imple
 
     public interface View extends BasePresenter.View {
         void startNewTagDialog();
-        void startTagDetailsActivity(long taskId);
+        void startTagDetailsActivity(long tagId);
         void startPlayActivity();
     }
 

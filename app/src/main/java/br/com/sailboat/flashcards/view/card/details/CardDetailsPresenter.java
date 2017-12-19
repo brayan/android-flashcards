@@ -151,8 +151,8 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
         void setRightAnswers(String amount);
         void setWrongAnswers(String amount);
         void showDialogDeleteCard();
-        void startInsertCardActivity(long taskId);
-        void startTagDetails(long projectId);
+        void startInsertCardActivity(long cardId);
+        void startTagDetails(long tagId);
     }
 
 }

@@ -9,15 +9,15 @@ import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.view.play.PlayActivity;
-import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
 import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
+import br.com.sailboat.flashcards.view.tag.insert.InsertTagActivity;
 
 
 public class TagListFragment extends BaseFragment<TagListPresenter> implements TagListPresenter.View {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.frg_tag_list;
+        return R.layout.frg_list;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
     }
 
     @Override
-    public void startTagDetailsActivity(long taskId) {
-        TagDetailsActivity.start(this, taskId);
+    public void startTagDetailsActivity(long tagId) {
+        TagDetailsActivity.start(this, tagId);
     }
 
     @Override
@@ -79,12 +79,7 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
     @Override
     public void startNewTagDialog() {
-        InsertTagDialog.show(getFragmentManager(), null, new InsertTagDialog.Callback() {
-            @Override
-            public void onClickOk() {
-                presenter.onClickOkInsertTag();
-            }
-        });
+        InsertTagActivity.start(this);
     }
 
     @Override

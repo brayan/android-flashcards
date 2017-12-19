@@ -15,10 +15,9 @@ import br.com.sailboat.canoe.helper.DialogHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
-import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
 import br.com.sailboat.flashcards.view.play.PlayActivity;
-import br.com.sailboat.flashcards.view.tag.InsertTagDialog;
+import br.com.sailboat.flashcards.view.tag.insert.InsertTagActivity;
 
 public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implements TagDetailsPresenter.View, TagDetailsAdapter.Callback {
 
@@ -92,13 +91,8 @@ public class TagDetailsFragment extends BaseFragment<TagDetailsPresenter> implem
     }
 
     @Override
-    public void startInsertTag(Tag tag) {
-        InsertTagDialog.show(getFragmentManager(), tag, new InsertTagDialog.Callback() {
-            @Override
-            public void onClickOk() {
-                presenter.onInsertTag();
-            }
-        });
+    public void startInsertTag(long tagId) {
+        InsertTagActivity.startToEdit(this, tagId);
     }
 
     @Override

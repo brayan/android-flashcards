@@ -21,14 +21,6 @@ public class ExtrasHelper {
     private static final String CARD_METRICS = "CARD_METRICS";
     private static final String CARD_PLAY_LIST = "CARD_PLAY_LIST";
 
-    public static void putCardPlay(CardPlay cardPlay, Intent intent) {
-        intent.putExtra(CARD_PLAY, cardPlay);
-    }
-
-    public static CardPlay getCardPlay(Intent intent) {
-        return (CardPlay) intent.getSerializableExtra(CARD_PLAY);
-    }
-
     public static void putCardPlay(CardPlay cardPlay, Bundle bundle) {
         bundle.putSerializable(CARD_PLAY, cardPlay);
     }
@@ -37,79 +29,59 @@ public class ExtrasHelper {
         return (CardPlay) bundle.getSerializable(CARD_PLAY);
     }
 
-    public static void putCardId(long taskId, Intent intent) {
-        intent.putExtra(CARD_ID, taskId);
+    public static void putCardId(long cardId, Intent intent) {
+        intent.putExtra(CARD_ID, cardId);
     }
 
     public static long getCardId(Intent intent) {
         return intent.getLongExtra(CARD_ID, -1);
     }
 
-    public static void putCardId(long taskId, Bundle bundle) {
-        bundle.putLong(CARD_ID, taskId);
+    public static void putCardId(long cardId, Bundle bundle) {
+        bundle.putLong(CARD_ID, cardId);
     }
 
     public static long getCardId(Bundle bundle) {
         return bundle.getLong(CARD_ID, -1);
     }
 
-    public static void putTagId(long projectId, Intent intent) {
-        intent.putExtra(TAG_ID, projectId);
+    public static void putTagId(long tagId, Intent intent) {
+        intent.putExtra(TAG_ID, tagId);
     }
 
     public static long getTagId(Intent intent) {
         return intent.getLongExtra(TAG_ID, -1);
     }
 
-    public static void putTagId(long projectId, Bundle bundle) {
-        bundle.putLong(TAG_ID, projectId);
-    }
-
-    public static boolean hasProjectId(Intent intent) {
-        return intent.hasExtra(TAG_ID);
+    public static void putTagId(long tagId, Bundle bundle) {
+        bundle.putLong(TAG_ID, tagId);
     }
 
     public static long getTagId(Bundle bundle) {
         return bundle.getLong(TAG_ID, -1);
     }
 
-    public static void putTags(List<Tag> projects, Intent intent) {
-        intent.putExtra(TAG_LIST, (ArrayList<Tag>) projects);
+    public static void putTags(List<Tag> tags, Intent intent) {
+        intent.putExtra(TAG_LIST, (ArrayList<Tag>) tags);
     }
 
-    public static void putTags(List<Tag> projects, Bundle bundle) {
-        bundle.putSerializable(TAG_LIST, (ArrayList<Tag>) projects);
+    public static void putTags(List<Tag> tags, Bundle bundle) {
+        bundle.putSerializable(TAG_LIST, (ArrayList<Tag>) tags);
     }
 
-    public static void putTasks(List<Card> tasks, Intent intent) {
-        intent.putExtra(CARD_LIST, (ArrayList<Card>) tasks);
+    public static void putCards(List<Card> cards, Intent intent) {
+        intent.putExtra(CARD_LIST, (ArrayList<Card>) cards);
     }
 
-    public static void putTasks(List<Card> tasks, Bundle bundle) {
-        bundle.putSerializable(CARD_LIST, (ArrayList<Card>) tasks);
+    public static void putCards(List<Card> cards, Bundle bundle) {
+        bundle.putSerializable(CARD_LIST, (ArrayList<Card>) cards);
     }
 
-    public static void putTaskViewList(List<Card> tasks, Intent intent) {
-        intent.putExtra(CARD_LIST, (ArrayList<Card>) tasks);
-    }
-
-    public static void putTaskViewList(List<Card> tasks, Bundle bundle) {
-        bundle.putSerializable(CARD_LIST, (ArrayList<Card>) tasks);
-    }
-
-    public static List<Card> getTaskViewList(Intent intent) {
+    public static List<Card> getCards(Intent intent) {
         return (List<Card>) intent.getSerializableExtra(CARD_LIST);
     }
 
-    public static List<Card> getTaskViewList(Bundle bundle) {
-        return (List<Card>) bundle.getSerializable(CARD_LIST);
-    }
-
-    public static List<Card> getTasks(Intent intent) {
-        return (List<Card>) intent.getSerializableExtra(CARD_LIST);
-    }
-
-    public static List<Card> getTasks(Bundle bundle) {
+    public static List<Card> getCards(Bundle bundle) {
         return (List<Card>) bundle.getSerializable(CARD_LIST);
     }
 
@@ -121,8 +93,12 @@ public class ExtrasHelper {
         return (List<Tag>) bundle.getSerializable(TAG_LIST);
     }
 
-    public static boolean hasTaskId(Intent intent) {
+    public static boolean hasCardId(Intent intent) {
         return intent.hasExtra(CARD_ID);
+    }
+
+    public static boolean hasTagId(Intent intent) {
+        return intent.hasExtra(TAG_ID);
     }
 
     public static void putCardMetrics(CardMetrics cardMetrics, Intent intent) {

@@ -37,8 +37,8 @@ public class TagViewHolder extends BaseViewHolder {
         bindName(item.getName());
     }
 
-    private void bindName(String taskName) {
-        tvName.setText(taskName);
+    private void bindName(String tagName) {
+        tvName.setText(tagName);
     }
 
     private void inflateViews() {

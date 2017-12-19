@@ -14,9 +14,13 @@
     <string name="msg_insert_tag">É necessário inserir o conteúdo da tag</string>
     <string name="title_tag_details">Detalhes da Tag</string>
     <string name="label_cards">Cartões</string>
-    <string name="edit_tag">Editar Tag</string>
-    <string name="new_tag">Nova Tag</string>
+    <string name="title_edit_tag">Editar Tag</string>
+    <string name="title_new_tag">Nova Tag</string>
     <string name="show_back_of_the_card">MOSTRAR VERSO DO CARTÃO</string>
     <string name="session_ended">Sessão Finalizada!</string>
     <string name="finish_session">Finalizar Sessão</string>
+    <string name="label_tag">Tag</string>
+    <string name="hint_enter_tag_name">Insira o nome da tag</string>
+    <string name="msg_insert_tag_name">É necessário inserir o nome da tag</string>
+    <string name="msg_add_card">É necessário adicionar pelo menos uma tag</string>
 </resources>

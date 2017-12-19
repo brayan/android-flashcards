@@ -13,7 +13,7 @@ public class CardViewHolder extends BaseViewHolder {
 
     private CardViewHolder.Callback callback;
 
-    private TextView tvName;
+    private TextView tvCardFront;
 
 
     public static CardViewHolder newInstance(ViewGroup parent, CardViewHolder.Callback callback) {
@@ -34,15 +34,15 @@ public class CardViewHolder extends BaseViewHolder {
     }
 
     public void bindToView(Card item) {
-        bindTaskName(item.getFront());
+        bindCardFrontText(item.getFront());
     }
 
-    private void bindTaskName(String taskName) {
-        tvName.setText(taskName);
+    private void bindCardFrontText(String front) {
+        tvCardFront.setText(front);
     }
 
     private void inflateViews() {
-        tvName = itemView.findViewById(R.id.card__tv__name);
+        tvCardFront = itemView.findViewById(R.id.card__tv__name);
     }
 
     private void bindListeners() {

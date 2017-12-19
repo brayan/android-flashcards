@@ -25,7 +25,7 @@ public class TagSelectorViewHolder extends TagViewHolder {
         super(itemView, callback);
         this.callback = callback;
 
-        cbSelected = (CheckBox) itemView.findViewById(R.id.vh_tag_selector__cb);
+        cbSelected = itemView.findViewById(R.id.vh_selector__cb);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

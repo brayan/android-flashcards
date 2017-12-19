@@ -133,6 +133,17 @@ public class TagSQLite extends BaseSQLite {
         delete(statement);
     }
 
+    public boolean hasTagAdded() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT Tag.* FROM Tag ");
+
+        Cursor cursor = performQuery(sb.toString());
+        boolean hasTag = cursor.moveToNext();
+        cursor.close();
+
+        return hasTag;
+    }
+
     private Tag buildFromCursor(Cursor cursor) throws Exception {
         Tag tag = new Tag();
         tag.setId(getLong(cursor, "id"));

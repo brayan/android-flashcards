@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.view.tag.selector;
+package br.com.sailboat.flashcards.view.card.selector;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,17 +14,17 @@ import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
-import br.com.sailboat.flashcards.model.Tag;
-import br.com.sailboat.flashcards.view.tag.insert.InsertTagActivity;
+import br.com.sailboat.flashcards.model.Card;
+import br.com.sailboat.flashcards.view.card.insert.InsertCardActivity;
 
 
-public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> implements TagSelectorPresenter.View, TagSelectorAdapter.Callback {
+public class CardSelectorFragment extends BaseFragment<CardSelectorPresenter> implements CardSelectorPresenter.View, CardSelectorAdapter.Callback {
 
 
-    public static TagSelectorFragment newInstance(List<Tag> tags) {
+    public static CardSelectorFragment newInstance(List<Card> cards) {
         Bundle args = new Bundle();
-        ExtrasHelper.putTags(tags, args);
-        TagSelectorFragment fragment = new TagSelectorFragment();
+        ExtrasHelper.putCards(cards, args);
+        CardSelectorFragment fragment = new CardSelectorFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,8 +36,8 @@ public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> impl
     }
 
     @Override
-    protected TagSelectorPresenter newPresenterInstance() {
-        return new TagSelectorPresenter(this);
+    protected CardSelectorPresenter newPresenterInstance() {
+        return new CardSelectorPresenter(this);
     }
 
     @Override
@@ -61,20 +61,20 @@ public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> impl
     }
 
     @Override
-    public void closeActivityResultOk(List<Tag> tags) {
+    public void closeActivityResultOk(List<Card> cards) {
         Intent data = new Intent();
-        ExtrasHelper.putTags(tags, data);
+        ExtrasHelper.putCards(cards, data);
         getActivity().setResult(Activity.RESULT_OK, data);
         getActivity().finish();
     }
 
     @Override
-    public void startInsertTag() {
-        InsertTagActivity.start(this);
+    public void startInsertCard() {
+        InsertCardActivity.start(this);
     }
 
     @Override
-    public void onClickTag(int position) {
+    public void onClickCard(int position) {
         presenter.onClickItem(position);
     }
 
@@ -84,7 +84,7 @@ public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> impl
     }
 
     @Override
-    public boolean isTagSelected(Tag item) {
+    public boolean isItemSelected(Card item) {
         return getPresenter().isItemSelected(item);
     }
 
@@ -101,7 +101,7 @@ public class TagSelectorFragment extends BaseFragment<TagSelectorPresenter> impl
 
     @Override
     protected void onInitRecycler() {
-        recycler.setAdapter(new TagSelectorAdapter(this));
+        recycler.setAdapter(new CardSelectorAdapter(this));
     }
 
     @Override

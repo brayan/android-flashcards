@@ -10,7 +10,6 @@ import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.exception.RequiredFieldNotFilledException;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
-import br.com.sailboat.canoe.helper.LogHelper;
 import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
@@ -33,7 +32,6 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
     @Override
     public void extractExtrasFromArguments(Bundle arguments) {
         extractCardToEdit(arguments);
-        extractTagToLink(arguments);
     }
 
     @Override
@@ -240,26 +238,12 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         return viewModel;
     }
 
-    private void extractTagToLink(Bundle bundle) {
-        try {
-            long tagId = ExtrasHelper.getTagId(bundle);
-            if (tagId != EntityHelper.NO_ID) {
-                Tag tag = TagSQLite.newInstance(getContext()).getTagById(tagId);
-                getViewModel().getTags().add(tag);
-            }
-        } catch (Exception e) {
-            LogHelper.logException(e);
-        }
-    }
-
     private void extractCardToEdit(Bundle bundle) {
         long cardId = ExtrasHelper.getCardId(bundle);
         getViewModel().setCardId(cardId);
     }
 
     public void onClickTag(int position) {
-//        Tag tag = (Tag) viewModel.getTags().get(position);
-//        view.startTagDetails(tag.getId());
     }
 
     public List<RecyclerItem> getRecyclerItemList() {

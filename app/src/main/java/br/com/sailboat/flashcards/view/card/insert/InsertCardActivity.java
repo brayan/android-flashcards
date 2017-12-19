@@ -14,27 +14,17 @@ public class InsertCardActivity extends BaseActivitySingleFragment<InsertCardFra
         fromFragment.startActivityForResult(intent, RequestCodeHelper.INSERT_CARD);
     }
 
-    public static void startWithProject(Fragment fromFragment, long projectId) {
+    public static void startToEdit(Fragment fromFragment, long cardId) {
         Intent intent = new Intent(fromFragment.getActivity(), InsertCardActivity.class);
-        ExtrasHelper.putTagId(projectId, intent);
-        fromFragment.startActivityForResult(intent, RequestCodeHelper.INSERT_CARD);
-    }
-
-    public static void startToEdit(Fragment fromFragment, long taskId) {
-        Intent intent = new Intent(fromFragment.getActivity(), InsertCardActivity.class);
-        ExtrasHelper.putCardId(taskId, intent);
+        ExtrasHelper.putCardId(cardId, intent);
         fromFragment.startActivityForResult(intent, RequestCodeHelper.INSERT_CARD);
     }
 
     @Override
     protected InsertCardFragment newFragmentInstance() {
-        if (ExtrasHelper.hasTaskId(getIntent())) {
-            long taskId = ExtrasHelper.getCardId(getIntent());
-            return InsertCardFragment.newInstanceWithTaskToEdit(taskId);
-
-        } else if (ExtrasHelper.hasProjectId(getIntent())) {
-            long projectId = ExtrasHelper.getTagId(getIntent());
-            return InsertCardFragment.newInstanceWithProject(projectId);
+        if (ExtrasHelper.hasCardId(getIntent())) {
+            long cardId = ExtrasHelper.getCardId(getIntent());
+            return InsertCardFragment.newInstanceWithCardToEdit(cardId);
 
         } else {
             return InsertCardFragment.newInstance();

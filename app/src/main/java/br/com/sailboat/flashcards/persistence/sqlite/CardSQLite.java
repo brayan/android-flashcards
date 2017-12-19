@@ -161,28 +161,39 @@ public class CardSQLite extends BaseSQLite {
         delete(statement);
     }
 
-    private Card buildFromCursor(Cursor cursor) throws Exception {
-        Card task = new Card();
-        task.setId(getLong(cursor, "id"));
-        task.setFront(getString(cursor, "front"));
-        task.setBack(getString(cursor, "back"));
+    public boolean hasCardAdded() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT Card.* FROM Card ");
 
-        return task;
+        Cursor cursor = performQuery(sb.toString());
+        boolean hasCard = cursor.moveToNext();
+        cursor.close();
+
+        return hasCard;
+    }
+
+    private Card buildFromCursor(Cursor cursor) throws Exception {
+        Card card = new Card();
+        card.setId(getLong(cursor, "id"));
+        card.setFront(getString(cursor, "front"));
+        card.setBack(getString(cursor, "back"));
+
+        return card;
     }
 
     @NonNull
     private List<Card> getCardList(String query, Filter filter) throws Exception {
         Cursor cursor = performQuery(query.toString(), filter);
-        List<Card> tasks = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             Card card = buildFromCursor(cursor);
-            tasks.add(card);
+            cards.add(card);
         }
 
         cursor.close();
 
-        return tasks;
+        return cards;
     }
 
 

@@ -15,9 +15,13 @@
     <string name="msg_insert_tag">You must insert the content of the tag</string>
     <string name="title_tag_details">Tag Details</string>
     <string name="label_cards">Cards</string>
-    <string name="edit_tag">Edit Tag</string>
-    <string name="new_tag">New Tag</string>
+    <string name="title_edit_tag">Edit Tag</string>
+    <string name="title_new_tag">New Tag</string>
     <string name="show_back_of_the_card">SHOW BACK OF THE CARD</string>
     <string name="session_ended">Session Ended!</string>
     <string name="finish_session">Finish Session</string>
+    <string name="label_tag">Tag</string>
+    <string name="hint_enter_tag_name">Enter the tag name</string>
+    <string name="msg_insert_tag_name">You must insert the tag name</string>
+    <string name="msg_add_card">You must add at least one card</string>
 </resources>

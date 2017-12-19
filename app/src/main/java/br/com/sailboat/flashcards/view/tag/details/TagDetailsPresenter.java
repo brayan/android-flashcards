@@ -38,7 +38,7 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
 
     @Override
     public void onClickFab() {
-        getView().startInsertTag(getViewModel().getTag());
+        getView().startInsertTag(getViewModel().getTag().getId());
     }
 
     public void onClickMenuDelete() {
@@ -144,7 +144,7 @@ public class TagDetailsPresenter extends BasePresenter<TagDetailsPresenter.View>
 
     public interface View extends BasePresenter.View {
         void showDialogDeleteTag();
-        void startInsertTag(Tag tag);
+        void startInsertTag(long tagId);
         void startCardDetails(long cardId);
         void startPlayActivity(long tagId);
     }
