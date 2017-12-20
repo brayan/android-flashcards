@@ -132,7 +132,7 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
         int colorFrom = ContextCompat.getColor(getActivity(), R.color.md_white_1000);
         int colorTo = ContextCompat.getColor(getActivity(), R.color.md_teal_300);
 
-        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1500,
+        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1000,
                 new AnimationHelper.BackgroundColorCallback() {
 
             @Override
@@ -155,7 +155,7 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
         int colorFrom = ContextCompat.getColor(getActivity(), R.color.md_white_1000);
         int colorTo = ContextCompat.getColor(getActivity(), R.color.md_red_300);
 
-        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1500,
+        AnimationHelper.performAnimationBackgroundColor(getActivity(), colorFrom, colorTo, 1000,
                 new AnimationHelper.BackgroundColorCallback() {
 
             @Override
