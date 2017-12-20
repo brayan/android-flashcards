@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.helper.ExtrasHelper;
+import br.com.sailboat.flashcards.view.card.list.CardListActivity;
 import br.com.sailboat.flashcards.view.play.PlayActivity;
 import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
 import br.com.sailboat.flashcards.view.tag.insert.InsertTagActivity;
@@ -27,7 +30,11 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_tag_list, menu);
+        if (ExtrasHelper.wasStartedFromMenu(getActivity().getIntent())) {
+            inflater.inflate(R.menu.menu_search_play, menu);
+        } else {
+            inflater.inflate(R.menu.menu_tag_list, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -36,7 +43,11 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
         switch (item.getItemId()) {
             case R.id.menu_play: {
-                presenter.onClickMenuPlay();
+                PlayActivity.start(this);
+                return true;
+            }
+            case R.id.menu_tag_list__cards: {
+                CardListActivity.startFromMenu(getActivity());
                 return true;
             }
             default: {
@@ -54,7 +65,18 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
 
     @Override
     protected void onInitToolbar() {
-        toolbar.setTitle(R.string.app_name);
+        if (ExtrasHelper.wasStartedFromMenu(getActivity().getIntent())) {
+            toolbar.setTitle(R.string.title_tags);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+        } else {
+            toolbar.setTitle(R.string.app_name);
+        }
     }
 
     @Override
@@ -73,12 +95,7 @@ public class TagListFragment extends BaseFragment<TagListPresenter> implements T
     }
 
     @Override
-    public void startPlayActivity() {
-        PlayActivity.start(this);
-    }
-
-    @Override
-    public void startNewTagDialog() {
+    public void startNewTagActivity() {
         InsertTagActivity.start(this);
     }
 

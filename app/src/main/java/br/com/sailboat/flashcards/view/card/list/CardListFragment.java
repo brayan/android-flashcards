@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.ScrollHelper;
 import br.com.sailboat.flashcards.R;
+import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.view.card.details.CardDetailsActivity;
 import br.com.sailboat.flashcards.view.card.insert.InsertCardActivity;
 import br.com.sailboat.flashcards.view.play.PlayActivity;
@@ -28,7 +30,11 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_card_list, menu);
+        if (ExtrasHelper.wasStartedFromMenu(getActivity().getIntent())) {
+            inflater.inflate(R.menu.menu_search_play, menu);
+        } else {
+            inflater.inflate(R.menu.menu_card_list, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -41,7 +47,7 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
                 return true;
             }
             case R.id.menu_card_list__tags: {
-                TagListActivity.start(this);
+                TagListActivity.startFromMenu(this);
                 return true;
             }
             default: {
@@ -59,7 +65,18 @@ public class CardListFragment extends BaseFragment<CardListPresenter> implements
 
     @Override
     protected void onInitToolbar() {
-        toolbar.setTitle(R.string.app_name);
+        if (ExtrasHelper.wasStartedFromMenu(getActivity().getIntent())) {
+            toolbar.setTitle(R.string.title_cards);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+        } else {
+            toolbar.setTitle(R.string.app_name);
+        }
     }
 
     @Override

@@ -34,7 +34,7 @@ public class TagListPresenter extends BasePresenter<TagListPresenter.View> imple
 
     @Override
     public void onClickFab() {
-        view.startNewTagDialog();
+        view.startNewTagActivity();
     }
 
     public void onClickOkInsertTag() {
@@ -107,15 +107,10 @@ public class TagListPresenter extends BasePresenter<TagListPresenter.View> imple
         return getRecyclerItemList().isEmpty();
     }
 
-    public void onClickMenuPlay() {
-        view.startPlayActivity();
-    }
-
 
     public interface View extends BasePresenter.View {
-        void startNewTagDialog();
+        void startNewTagActivity();
         void startTagDetailsActivity(long tagId);
-        void startPlayActivity();
     }
 
 

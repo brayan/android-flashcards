@@ -20,6 +20,7 @@ public class ExtrasHelper {
     private static final String TAG_LIST = "TAG_LIST";
     private static final String CARD_METRICS = "CARD_METRICS";
     private static final String CARD_PLAY_LIST = "CARD_PLAY_LIST";
+    private static final String STARTED_FROM_MENU = "STARTED_FROM_MENU";
 
     public static void putCardPlay(CardPlay cardPlay, Bundle bundle) {
         bundle.putSerializable(CARD_PLAY, cardPlay);
@@ -133,4 +134,11 @@ public class ExtrasHelper {
         return (List<CardPlay>) bundle.getSerializable(CARD_PLAY_LIST);
     }
 
+    public static void putStartedFromMenu(boolean fromMenu, Intent intent) {
+        intent.putExtra(STARTED_FROM_MENU, fromMenu);
+    }
+
+    public static boolean wasStartedFromMenu(Intent intent) {
+        return intent != null && intent.getBooleanExtra(STARTED_FROM_MENU, false);
+    }
 }

@@ -18,7 +18,6 @@ public class LaunchActivity extends AppCompatActivity {
 
         try {
             boolean hasCardAdded = CardSQLite.newInstance(this).hasCardAdded();
-
             boolean hasTagAdded = TagSQLite.newInstance(this).hasTagAdded();
 
             if (hasCardAdded && hasTagAdded) {

@@ -24,4 +24,6 @@
     <string name="hint_enter_tag_name">Enter the tag name</string>
     <string name="msg_insert_tag_name">You must insert the tag name</string>
     <string name="msg_add_card">You must add at least one card</string>
+    <string name="title_cards">Cards</string>
+    <string name="title_tags">Tags</string>
 </resources>

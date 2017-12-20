@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import br.com.sailboat.canoe.base.BaseActivitySingleFragment;
+import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.helper.RequestCodeHelper;
 
 public class TagListActivity extends BaseActivitySingleFragment<TagListFragment> {
@@ -16,6 +17,12 @@ public class TagListActivity extends BaseActivitySingleFragment<TagListFragment>
 
     public static void start(Fragment fragment) {
         Intent intent = new Intent(fragment.getActivity(), TagListActivity.class);
+        fragment.startActivityForResult(intent, RequestCodeHelper.TAG_LIST);
+    }
+
+    public static void startFromMenu(Fragment fragment) {
+        Intent intent = new Intent(fragment.getActivity(), TagListActivity.class);
+        ExtrasHelper.putStartedFromMenu(true, intent);
         fragment.startActivityForResult(intent, RequestCodeHelper.TAG_LIST);
     }
 
