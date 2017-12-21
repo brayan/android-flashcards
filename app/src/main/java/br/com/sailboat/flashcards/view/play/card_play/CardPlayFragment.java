@@ -10,15 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import br.com.sailboat.canoe.base.BaseFragment;
 import br.com.sailboat.canoe.helper.AnimationHelper;
 import br.com.sailboat.canoe.helper.ImageViewColorHelper;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
 import br.com.sailboat.flashcards.model.view.CardPlay;
+import br.com.sailboat.flashcards.view.tag.details.TagDetailsActivity;
+import br.com.sailboat.flashcards.view.tag.list.TagListAdapter;
 
 
-public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements CardPlayPresenter.View {
+public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements CardPlayPresenter.View, TagListAdapter.Callback {
 
     private LinearLayout llShowBackContent;
     private LinearLayout llRightAnswer;
@@ -51,6 +56,12 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
     @Override
     protected CardPlayPresenter newPresenterInstance() {
         return new CardPlayPresenter(this);
+    }
+
+    @Override
+    protected void onInitRecycler() {
+        recycler.setAdapter(new TagListAdapter(this));
+        recycler.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -171,6 +182,11 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
         });
     }
 
+    @Override
+    public void startTagDetailsActivity(long tagId) {
+        TagDetailsActivity.start(this, tagId);
+    }
+
     private void initListeners() {
         rlShowBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +216,16 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
 
     public void setCallback(Callback callback) {
         this.callback = callback;
+    }
+
+    @Override
+    public void onClickTag(int position) {
+        presenter.onClickTag(position);
+    }
+
+    @Override
+    public List<RecyclerItem> getRecyclerItemList() {
+        return presenter.getRecyclerItemList();
     }
 
 

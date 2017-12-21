@@ -3,15 +3,24 @@ package br.com.sailboat.flashcards.view.play.card_play;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
+import br.com.sailboat.canoe.recycler.RecyclerItem;
+import br.com.sailboat.canoe.recycler.item.LabelRecyclerItem;
+import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
+import br.com.sailboat.flashcards.helper.ViewType;
 import br.com.sailboat.flashcards.model.Card;
+import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.model.view.CardAnswer;
 import br.com.sailboat.flashcards.model.view.CardPlay;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
+import br.com.sailboat.flashcards.persistence.sqlite.TagSQLite;
 
 
 public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
@@ -32,15 +41,50 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         loadInfo();
     }
 
+    public void onClickShowBackOfTheCard() {
+        viewModel.setShowingBackOfTheCard(!isShowingBackOfTheCard());
+
+        if (isShowingBackOfTheCard()) {
+            getView().showBackOfTheCardWithAnimation();
+        } else {
+            getView().hideBackOfTheCardWithAnimation();
+        }
+    }
+
+    public void onClickRightAnswer() {
+        if (viewModel.getCardPlay().getAnswer() != CardAnswer.RIGHT) {
+            viewModel.getCardPlay().setAnswer(CardAnswer.RIGHT);
+            updateRightOrWrongButtonsWithAnimation();
+        }
+    }
+
+    public void onClickWrongAnswer() {
+        if (viewModel.getCardPlay().getAnswer() != CardAnswer.WRONG) {
+            viewModel.getCardPlay().setAnswer(CardAnswer.WRONG);
+            updateRightOrWrongButtonsWithAnimation();
+        }
+    }
+
+    public void onAnimationEnd() {
+        view.onClickAnswer(viewModel.getCardPlay());
+    }
+
+    public void onClickTag(int position) {
+        Tag tag = (Tag) getRecyclerItemList().get(position);
+        view.startTagDetailsActivity(tag.getId());
+    }
+
     private void loadInfo() {
         AsyncHelper.execute(AsyncTask.THREAD_POOL_EXECUTOR, new AsyncHelper.Callback() {
 
             Card card;
+            List<RecyclerItem> recyclerItemList = new ArrayList<>();
 
             @Override
             public void doInBackground() throws Exception {
                 long cardId = viewModel.getCardPlay().getCardId();
-                card = CardSQLite.newInstance(getContext()).getCardById(cardId);
+                loadCard(cardId);
+                loadTags(cardId);
             }
 
             @Override
@@ -56,21 +100,29 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
                 closeActivityWithResultCanceled();
             }
 
+            private void loadCard(long cardId) throws Exception {
+                card = CardSQLite.newInstance(getContext()).getCardById(cardId);
+            }
+
+            private void loadTags(long cardId) throws Exception {
+                List<Tag> tags = TagSQLite.newInstance(getContext()).getByCard(cardId);
+
+                if (!tags.isEmpty()) {
+                    LabelRecyclerItem label = new LabelRecyclerItem(ViewType.LABEL);
+                    label.setLabel(getString(R.string.label_tags));
+
+                    recyclerItemList.add(label);
+                    recyclerItemList.addAll(tags);
+                }
+            }
+
             private void updateViewModel() {
                 viewModel.setCard(card);
+                viewModel.getRecyclerItemList().clear();
+                viewModel.getRecyclerItemList().addAll(recyclerItemList);
             }
 
         });
-    }
-
-    public void onClickShowBackOfTheCard() {
-        viewModel.setShowingBackOfTheCard(!isShowingBackOfTheCard());
-
-        if (isShowingBackOfTheCard()) {
-            getView().showBackOfTheCardWithAnimation();
-        } else {
-            getView().hideBackOfTheCardWithAnimation();
-        }
     }
 
     private void updateContentViews() {
@@ -127,22 +179,8 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         viewModel.setCardPlay(cardPlay);
     }
 
-    public void onClickRightAnswer() {
-        if (viewModel.getCardPlay().getAnswer() != CardAnswer.RIGHT) {
-            viewModel.getCardPlay().setAnswer(CardAnswer.RIGHT);
-            updateRightOrWrongButtonsWithAnimation();
-        }
-    }
-
-    public void onClickWrongAnswer() {
-        if (viewModel.getCardPlay().getAnswer() != CardAnswer.WRONG) {
-            viewModel.getCardPlay().setAnswer(CardAnswer.WRONG);
-            updateRightOrWrongButtonsWithAnimation();
-        }
-    }
-
-    public void onAnimationEnd() {
-        view.onClickAnswer(viewModel.getCardPlay());
+    public List<RecyclerItem> getRecyclerItemList() {
+        return viewModel.getRecyclerItemList();
     }
 
 
@@ -160,6 +198,7 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         void onClickAnswer(CardPlay cardPlay);
         void setRightAnswerAsSelectedWithAnimation();
         void setWrongAnswerAsSelectedWithAnimation();
+        void startTagDetailsActivity(long tagId);
     }
 
 

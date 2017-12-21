@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.sailboat.canoe.recycler.RecyclerItem;
+import br.com.sailboat.canoe.recycler.item.LabelRecyclerItem;
+import br.com.sailboat.canoe.recycler.view_holder.LabelViewHolder;
 import br.com.sailboat.flashcards.helper.ViewType;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.view.view_holder.TagViewHolder;
@@ -26,6 +28,9 @@ public class TagListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case ViewType.TAG: {
                 return TagViewHolder.newInstance(parent, callback);
             }
+            case ViewType.LABEL: {
+                return LabelViewHolder.newInstance(parent);
+            }
             default: {
                 throw new RuntimeException("ViewHolder not found");
             }
@@ -39,6 +44,10 @@ public class TagListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (item.getViewType()) {
             case ViewType.TAG: {
                 ((TagViewHolder) holder).bindToView((Tag) item);
+                return;
+            }
+            case ViewType.LABEL: {
+                ((LabelViewHolder) holder).bindItem((LabelRecyclerItem) item);
                 return;
             }
             default: {
