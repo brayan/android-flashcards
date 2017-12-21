@@ -41,6 +41,10 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
         loadInfo();
     }
 
+    public void postActivityResult() {
+        loadInfo();
+    }
+
     public void onClickShowBackOfTheCard() {
         viewModel.setShowingBackOfTheCard(!isShowingBackOfTheCard());
 
@@ -126,6 +130,7 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
     }
 
     private void updateContentViews() {
+        view.updateRecycler();
         view.setFrontOfTheCard(viewModel.getCard().getFront());
         view.setBackOfTheCard(viewModel.getCard().getBack());
         updateAlarmViews();
