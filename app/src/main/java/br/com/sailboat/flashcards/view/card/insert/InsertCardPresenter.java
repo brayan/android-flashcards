@@ -10,10 +10,10 @@ import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.exception.RequiredFieldNotFilledException;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.EntityHelper;
-import br.com.sailboat.canoe.helper.StringHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.R;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
+import br.com.sailboat.flashcards.interactor.validation.CardValidation;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.persistence.sqlite.CardSQLite;
@@ -59,8 +59,9 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         try {
             closeKeyboard();
             extractInfoFromViews();
-            performValidations();
-            saveRecords();
+            Card card = getCardFromViewModel();
+            CardValidation.validate(getContext(), card);
+            saveRecords(card);
 
         } catch (RequiredFieldNotFilledException e) {
             showMessage(e.getMessage());
@@ -148,10 +149,8 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
         }
     }
 
-    private void saveRecords() {
+    private void saveRecords(final Card card) {
         AsyncHelper.execute(new AsyncHelper.Callback() {
-
-            Card card;
 
             @Override
             public void doInBackground() throws Exception {
@@ -170,8 +169,6 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
             }
 
             private void prepareAndSaveCard() throws Exception {
-                card = getCardFromViews();
-
                 if (hasCardToEdit()) {
                     CardSQLite.newInstance(getContext()).update(card);
                 } else {
@@ -192,7 +189,7 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
     }
 
     @NonNull
-    private Card getCardFromViews() {
+    private Card getCardFromViewModel() {
         Card card = new Card();
         card.setFront(getViewModel().getFront());
         card.setBack(getViewModel().getBack());
@@ -207,27 +204,6 @@ public class InsertCardPresenter extends BasePresenter<InsertCardPresenter.View>
     private void extractInfoFromViews() {
         getViewModel().setFront(getView().getFront());
         getViewModel().setBack(getView().getBack());
-    }
-
-    private void performValidations() throws Exception {
-        validateFront();
-        validateBack();
-    }
-
-    private void validateFront() throws Exception {
-        String front = getViewModel().getFront();
-
-        if (StringHelper.isNullOrEmpty(front)) {
-            throw new RequiredFieldNotFilledException(getString(R.string.msg_insert_front));
-        }
-    }
-
-    private void validateBack() throws Exception {
-        String back = getViewModel().getBack();
-
-        if (StringHelper.isNullOrEmpty(back)) {
-            throw new RequiredFieldNotFilledException(getString(R.string.msg_insert_back));
-        }
     }
 
     private boolean hasCardToEdit() {

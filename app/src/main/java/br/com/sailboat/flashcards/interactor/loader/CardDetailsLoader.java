@@ -1,4 +1,4 @@
-package br.com.sailboat.flashcards.interactor;
+package br.com.sailboat.flashcards.interactor.loader;
 
 import android.content.Context;
 

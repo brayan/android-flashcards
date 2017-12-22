@@ -9,7 +9,7 @@ import br.com.sailboat.canoe.base.BasePresenter;
 import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
-import br.com.sailboat.flashcards.interactor.CardDetailsLoader;
+import br.com.sailboat.flashcards.interactor.loader.CardDetailsLoader;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.model.view.CardMetrics;

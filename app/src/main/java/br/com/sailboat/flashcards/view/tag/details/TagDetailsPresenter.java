@@ -10,7 +10,7 @@ import br.com.sailboat.canoe.helper.AsyncHelper;
 import br.com.sailboat.canoe.helper.LogHelper;
 import br.com.sailboat.canoe.recycler.RecyclerItem;
 import br.com.sailboat.flashcards.helper.ExtrasHelper;
-import br.com.sailboat.flashcards.interactor.TagDetailsLoader;
+import br.com.sailboat.flashcards.interactor.loader.TagDetailsLoader;
 import br.com.sailboat.flashcards.model.Card;
 import br.com.sailboat.flashcards.model.Tag;
 import br.com.sailboat.flashcards.persistence.sqlite.CardTagSQLite;
