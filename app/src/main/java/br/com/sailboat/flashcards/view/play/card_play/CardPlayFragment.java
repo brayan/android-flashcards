@@ -75,7 +75,30 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
         tvBackOfTheCard = getView().findViewById(R.id.frg_card_play__tv__back);
         ivRightAnswer = getView().findViewById(R.id.frg_card_play__iv__right);
         ivWrongAnswer = getView().findViewById(R.id.frg_card_play__iv__wrong);
-        initListeners();
+    }
+
+    @Override
+    protected void initListeners() {
+        rlShowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickShowBackOfTheCard();
+            }
+        });
+
+        llRightAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickRightAnswer();
+            }
+        });
+
+        llWrongAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onClickWrongAnswer();
+            }
+        });
     }
 
     @Override
@@ -191,29 +214,6 @@ public class CardPlayFragment extends BaseFragment<CardPlayPresenter> implements
     @Override
     public void startTagDetailsActivity(long tagId) {
         TagDetailsActivity.start(this, tagId);
-    }
-
-    private void initListeners() {
-        rlShowBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClickShowBackOfTheCard();
-            }
-        });
-
-        llRightAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClickRightAnswer();
-            }
-        });
-
-        llWrongAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClickWrongAnswer();
-            }
-        });
     }
 
     public Callback getCallback() {
