@@ -1,7 +1,5 @@
 package br.com.sailboat.flashcards.view.card.list;
 
-import android.os.AsyncTask;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class CardListPresenter extends BasePresenter<CardListPresenter.View> imp
     }
 
     private void loadCards() {
-        AsyncHelper.execute(AsyncTask.THREAD_POOL_EXECUTOR, new AsyncHelper.Callback() {
+        AsyncHelper.execute(new AsyncHelper.Callback() {
 
             List<RecyclerItem> cards = new ArrayList<>();
 

@@ -1,6 +1,5 @@
 package br.com.sailboat.flashcards.view.card.details;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import java.util.List;
@@ -95,7 +94,7 @@ public class CardDetailsPresenter extends BasePresenter<CardDetailsPresenter.Vie
     }
 
     private void loadDetails() {
-        AsyncHelper.execute(AsyncTask.THREAD_POOL_EXECUTOR, new AsyncHelper.Callback() {
+        AsyncHelper.execute(new AsyncHelper.Callback() {
 
             Card card;
             List<RecyclerItem> cardDetails;

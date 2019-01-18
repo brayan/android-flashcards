@@ -79,7 +79,7 @@ public class CardPlayPresenter extends BasePresenter<CardPlayPresenter.View> {
     }
 
     private void loadInfo() {
-        AsyncHelper.execute(AsyncTask.THREAD_POOL_EXECUTOR, new AsyncHelper.Callback() {
+        AsyncHelper.execute(new AsyncHelper.Callback() {
 
             Card card;
             List<RecyclerItem> recyclerItemList = new ArrayList<>();
